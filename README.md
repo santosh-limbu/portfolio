@@ -1,39 +1,50 @@
-# Santosh Limbu - Interactive PowerPoint-Style Project Portfolio
+# Santosh Limbu - Interactive Portfolio & Project Slide Theater
 
-An interactive, single-page presentation deck portfolio designed for employers and hiring managers. It fits completely within a single viewport without requiring scrolling and delivers a slide-based PowerPoint experience with interactive project deep-dives, live dashboard image switchers, and high-resolution zoom.
+A modern, interactive portfolio website designed for recruiters and hiring managers. It features a clean, single-page executive landing hub with a tailored summary blurb, quantifiable impact metrics, and an interactive catalog of projects. 
+
+Clicking any project seamlessly launches an interactive **PowerPoint-style presentation slide theater** for deep-dive inspection with live production dashboards and process architectures.
 
 Hosted directly on **GitHub Pages** with zero build configuration.
 
 ---
 
-## 🌟 Presentation Deck Features
+## 🌟 Architecture & Key Features
 
-- **No-Scroll 100vh Viewport Architecture**: Fits cleanly on desktop and laptop displays without page scrolling.
-- **PowerPoint-Style Slide Navigation**:
-  - **12 Interactive Slides** covering projects, healthcare data suites, skills, and certifications.
-  - **Left Thumbnail Rail**: Collapsible thumbnail strip allowing 1-click jumps across all slides.
-  - **Bottom Presentation Control Bar**: `< Previous`, `Next >`, slide counter (`01 / 12`), interactive progress dots, and keyboard shortcuts.
-  - **Slide Sorter Modal (`Press G`)**: PowerPoint-style grid view to inspect all 12 slides at a glance.
-  - **Fullscreen Presentation Mode (`Press F`)**: Expands into an executive pitch deck.
-- **Interactive Project Deep Dives**:
-  - **Retire & Return Overhaul** (*Published National Best-Practice Case Study by NHS Employers* & Trust Award Winner).
-  - **TempRE Vacancy Approvals System** (*2,500+ shift requests, multi-tier approval logic, TSS/GDO/DCMO automated triggers*).
-  - **Healthcare KPI & SLA Reporting Suite** (*DAX rolling statistics, 3 custom SLA gauge charts, £284k+ live spend tracked*).
-  - **Shift Spend Decomposition Tree & Trends** (*AI Decomposition Tree and multi-year winter surge curve peaking at £0.62M*).
-  - **Bank & Locum Additional Assignment Forms** (*75% faster turnaround: 30 days down to 5 days on 50+ weekly applications*).
-  - **Team Operations & Invoicing SLA Tracker** (*438 weekly communications monitored with agency invoice dispute governance*).
-  - **McKesson UK Scheduling & Rota System** (*£9,000 annual recurring software savings & COVID-19 pandemic modeling*).
-  - **CurrentRMS Full Lifecycle Implementation** (*UAT management, SOP documentation, and 100% staff adoption*).
-- **Interactive Multi-Image Dashboards**: Click tabs inside project slides to toggle between different dashboard views and click to zoom into high-resolution screenshots.
-- **Dynamic Recruiter Persona Switcher**: Tailor the executive summary for *Data Analyst & BI*, *Project Coordinator / PM*, or *Digital Transformation*.
+### 1. Single-Page Executive Hub (Default View)
+- **Executive Summary Blurb**: Highlights specialization in Power BI development, complex operational datasets, DAX modeling, and digital transformation.
+- **Dynamic Recruiter Persona Switcher**: Tailor the summary blurb in 1 click for **Data Analyst & BI**, **Project Coordinator / PM**, or **Digital Transformation**.
+- **Quantifiable Impact Strip**:
+  - **75% Faster Processing**: Locum onboarding reduced from 30 days to 5 days.
+  - **£9,000+ Annual Savings**: In-house rota and forecasting replacement at McKesson.
+  - **2,500+ Digital Approvals Audited**: Centralized governance via TempRE.
+  - **100% Audit Trail**: Zero lost forms; published national case study by NHS Employers.
+- **Project Directory Catalog**: Filterable by *Power BI & Analytics*, *Digital Transformation*, *Workflow Automation*, and *Systems & Modeling*, complete with real-time keyword search.
+
+### 2. Fullscreen Presentation Deck Theater
+Clicking on any project launches its dedicated interactive presentation slides:
+- **Retire & Return Digital Overhaul** (*Published National Best-Practice Case Study by NHS Employers* & Trust Award Winner) - 3 slides with process flow architecture.
+- **TempRE Vacancy Approvals System** (*2,569 shift requests audited, GDO/DCMO multi-tier approval routing*) - 4 slides with production executive pipeline, urgent shift tracker, and progress tracker.
+- **Healthcare KPI & SLA Reporting Suite** (*DAX time intelligence, 3 custom SLA gauge charts, £284k+ live spend tracked*) - 3 slides comparing rolling statistics and monthly views.
+- **Shift Spend Decomposition Tree & Winter Surge** (*AI Decomposition Tree and multi-year winter surge curve peaking at £0.62M*) - 2 slides with unit cost analytics.
+- **Bank & Locum Additional Assignment Forms** (*75% faster turnaround: 30 days to 5 days on 50+ weekly applications*) - 3 slides with Treemap analytics and RTW compliance checks.
+- **Team Operations & Invoicing SLA Tracker** (*438 weekly communications monitored with agency invoice dispute governance*) - 2 slides.
+- **McKesson UK Scheduling & Rota System** (*£9,000 annual recurring software savings & COVID-19 pandemic modeling*) - 2 slides.
+- **CurrentRMS Full Lifecycle Implementation** (*UAT management, SOP documentation, and 100% staff adoption*) - 2 slides.
+
+### 3. Presentation Navigation & Controls
+- **Slide Navigation**: `< Previous Slide` and `Next Slide >` buttons, slide counter (`01 / 03`), and clickable progress dots.
+- **Project Switcher**: Move to the next or previous project (`Next Project →`) without closing the presentation.
+- **Click-to-Zoom High-Resolution Lightbox**: Click any dashboard screenshot to inspect DAX visuals, needle gauges, and data tables in high resolution.
 - **Keyboard Shortcuts**:
   - `←` or `PageUp`: Previous slide
   - `→`, `Space`, or `PageDown`: Next slide
-  - `Home` / `End`: First / Last slide
-  - `G`: Open Slide Sorter grid
-  - `F`: Toggle Fullscreen presentation
-  - `T`: Toggle Dark / Light theme
-  - `Esc`: Close modals
+  - `Esc`: Close presentation and return to Hub (or close modal)
+  - `F`: Toggle Fullscreen Presentation Mode
+
+### 4. Interactive Quick Modals
+- **Skills Matrix Modal**: 4-category tiered matrix (*Data Visualization*, *Automation*, *Project Management*, *Databases & Systems*).
+- **Career Timeline Modal**: Chronological history covering UHCW NHS Trust, McKesson UK, and City Audio Visual, plus the Google Project Management Certificate.
+- **Contact & Print**: 1-click email copy helper (`s.limbu@hotmail.com`) and print-ready stylesheet (`@media print`) for instant PDF export.
 
 ---
 
@@ -41,14 +52,14 @@ Hosted directly on **GitHub Pages** with zero build configuration.
 
 ```text
 ProjectPortfolio/
-├── index.html                 # Main PowerPoint presentation deck
+├── index.html                 # Single-page executive hub + slide theater modal
 ├── README.md                  # Documentation & GitHub Pages guide
-├── .gitignore                 # Standard ignore file
+├── .gitignore                 # Clean ignore rules
 └── assets/
     ├── css/
-    │   └── style.css          # Viewport-fitted presentation styles, slide transitions, light/dark themes
+    │   └── style.css          # Executive hub styling, presentation theater, dark/light themes
     ├── js/
-    │   └── main.js            # PresentationDeck engine, keyboard shortcuts, slide sorter, sub-tabs
+    │   └── main.js            # Projects slide database, presentation controller, search & filters
     └── images/                # High-resolution Power BI dashboard screenshots
         ├── dashboard-kpi-rolling-statistics.png
         ├── dashboard-kpi-monthly-statistics.png
@@ -65,7 +76,7 @@ ProjectPortfolio/
 
 ## 🚀 How to Host on GitHub Pages (Step-by-Step)
 
-This site uses pure standard web technologies (HTML5, modern CSS3, Vanilla JS). It requires no build tools or package managers and works natively on GitHub Pages out of the box.
+This site uses pure standard web technologies (HTML5, CSS3, Vanilla JS). It requires no build tools or package managers and works natively on GitHub Pages out of the box.
 
 ### Step 1: Create a Repository on GitHub
 1. Log in to [github.com/santosh-limbu](https://github.com/santosh-limbu).

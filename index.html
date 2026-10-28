@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Santosh Limbu | Interactive Project Deck &amp; Portfolio</title>
-  <meta name="description" content="Interactive PowerPoint-style project portfolio of Santosh Limbu - Project Support Officer, Power BI Data Analyst & Digital Transformation Specialist.">
-  <meta name="keywords" content="Santosh Limbu, Power BI, Data Analyst, Project Support, Digital Transformation, NHS, Portfolio">
+  <title>Santosh Limbu | Project Support &amp; Power BI Data Analyst</title>
+  <meta name="description" content="Portfolio of Santosh Limbu - Project Support Officer, Power BI Data Analyst & Digital Transformation Specialist. Click any project to launch interactive PowerPoint-style presentation slides.">
+  <meta name="keywords" content="Santosh Limbu, Power BI, Data Analyst, Project Support, Digital Transformation, NHS, Power Automate, Portfolio">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23005eb8'/><text x='50' y='65' font-size='50' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>SL</text></svg>">
@@ -21,54 +21,46 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body data-theme="light" class="deck-mode">
+<body data-theme="light">
 
-  <!-- Top App Bar -->
-  <header class="deck-header">
-    <div class="deck-header-left">
-      <div class="deck-brand">
+  <!-- Top App Navigation Bar -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-left">
+      <div class="brand-identity">
         <span class="brand-badge">SL</span>
-        <div class="brand-meta">
+        <div class="brand-details">
           <span class="brand-name">Santosh Limbu</span>
-          <span class="brand-subtitle"><span class="pulse-indicator"></span> Project Support &amp; Data Analyst</span>
+          <span class="brand-status"><span class="status-pulse"></span> Coventry, UK • Open for Opportunities</span>
         </div>
       </div>
     </div>
 
-    <!-- Center Slide Title Indicator -->
-    <div class="deck-header-center">
-      <div class="current-slide-badge" id="currentSlideBadge" title="Click to view all slides">
-        <i class="fa-solid fa-layer-group"></i>
-        <span id="headerSlideTitle">01. Executive Overview</span>
-        <i class="fa-solid fa-chevron-down caret-icon"></i>
-      </div>
-    </div>
-
-    <!-- Header Actions -->
-    <div class="deck-header-right">
-      <!-- Quick Persona Tailor -->
-      <div class="persona-dropdown-wrapper">
-        <button class="header-action-btn persona-trigger" id="personaDropdownBtn" title="Tailor Deck Focus">
+    <!-- Center/Right Header Controls -->
+    <div class="header-right">
+      <!-- Recruiter Focus Dropdown -->
+      <div class="persona-dropdown-container">
+        <button class="persona-trigger-btn" id="personaTriggerBtn" title="Tailor Summary to Your Role">
           <i class="fa-solid fa-sliders"></i>
-          <span class="btn-text" id="activePersonaLabel">Data &amp; BI Focus</span>
+          <span id="activePersonaText">Data &amp; BI Focus</span>
+          <i class="fa-solid fa-chevron-down caret-icon"></i>
         </button>
-        <div class="persona-menu" id="personaMenu">
-          <div class="menu-header">Select Recruiter Focus:</div>
-          <button class="persona-menu-item active" data-persona="data">
+        <div class="persona-popover" id="personaPopover">
+          <div class="popover-title">Select Recruiter Focus:</div>
+          <button class="popover-item active" data-persona="data">
             <i class="fa-solid fa-chart-pie"></i>
             <div>
               <strong>Data Analyst &amp; Power BI</strong>
               <small>DAX modeling, KPI tracking, spend analytics</small>
             </div>
           </button>
-          <button class="persona-menu-item" data-persona="pm">
+          <button class="popover-item" data-persona="pm">
             <i class="fa-solid fa-diagram-project"></i>
             <div>
               <strong>Project Coordinator / PM</strong>
               <small>Agile delivery, stakeholder alignment, UAT</small>
             </div>
           </button>
-          <button class="persona-menu-item" data-persona="digital">
+          <button class="popover-item" data-persona="digital">
             <i class="fa-solid fa-bolt"></i>
             <div>
               <strong>Digital Transformation</strong>
@@ -78,1149 +70,605 @@
         </div>
       </div>
 
-      <!-- Slide Sorter Grid View -->
-      <button class="header-action-btn" id="openSorterBtn" title="Slide Sorter (All Projects Grid) [Press G]">
-        <i class="fa-solid fa-table-cells"></i>
-        <span class="btn-text">Slide Sorter</span>
+      <!-- Quick Modal Triggers -->
+      <button class="header-nav-btn" id="openSkillsModalBtn" title="View Skills Matrix">
+        <i class="fa-solid fa-toolbox"></i>
+        <span>Skills</span>
       </button>
 
-      <!-- Fullscreen Toggle -->
-      <button class="header-action-btn icon-only" id="fullscreenBtn" title="Toggle Fullscreen [Press F]">
-        <i class="fa-solid fa-expand"></i>
+      <button class="header-nav-btn" id="openExperienceModalBtn" title="View Career Timeline">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>Experience</span>
       </button>
 
       <!-- Theme Switcher -->
-      <button class="header-action-btn icon-only" id="themeToggle" title="Toggle Dark/Light Mode [Press T]">
+      <button class="header-icon-btn" id="themeToggleBtn" title="Toggle Light / Dark Mode">
         <i class="fa-solid fa-moon"></i>
       </button>
 
-      <!-- Quick Contact Button -->
-      <button class="header-action-btn btn-contact-pop" id="quickContactBtn" title="Contact Details">
+      <!-- Connect Button -->
+      <button class="header-action-btn" id="openContactModalBtn">
         <i class="fa-solid fa-paper-plane"></i>
-        <span class="btn-text">Connect</span>
+        <span>Get in Touch</span>
       </button>
     </div>
   </header>
 
-  <!-- Main Presentation Deck Container (Fitted Viewport) -->
-  <div class="deck-viewport">
+  <!-- Main Hub View (Summary Blurb + Project Directory) -->
+  <main class="hub-container" id="hubView">
+
+    <!-- Hero / Summary Blurb Section -->
+    <section class="summary-hero-section">
+      <div class="hero-top-row">
+        <div class="hero-titles">
+          <div class="badge-award-pill">
+            <i class="fa-solid fa-award"></i> Published National Best-Practice Case Study by NHS Employers
+          </div>
+          <h1 class="hero-name-title">
+            Project Support Officer &amp; <span class="gradient-text">Power BI Data Analyst</span>
+          </h1>
+        </div>
+
+        <div class="hero-quick-ctas">
+          <button class="copy-email-chip" id="copyEmailHeroBtn">
+            <i class="fa-regular fa-copy"></i>
+            <span id="copyEmailHeroText">s.limbu@hotmail.com</span>
+          </button>
+          <a href="https://linkedin.com/in/slimbu" target="_blank" rel="noopener noreferrer" class="social-chip" title="LinkedIn Profile">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+          <a href="https://github.com/santosh-limbu" target="_blank" rel="noopener noreferrer" class="social-chip" title="GitHub Profile">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Dynamic Blurb Card (Updates based on Persona Selector) -->
+      <div class="blurb-card" id="dynamicBlurbCard">
+        <div class="blurb-quote-mark"><i class="fa-solid fa-quote-left"></i></div>
+        <p class="blurb-text" id="dynamicBlurbText">
+          Data-focused project professional with 5+ years of experience transforming complex healthcare and operational datasets into intuitive, high-impact Power BI dashboards. Proficient in advanced DAX modeling, KPI gauge tracking against SLAs, and decomposition trees for root-cause analysis that empower clinical and executive stakeholders to independently make data-driven decisions.
+        </p>
+      </div>
+
+      <!-- Key Metrics Strip -->
+      <div class="metrics-strip">
+        <div class="metric-chip">
+          <span class="metric-accent">75%</span>
+          <span class="metric-caption">Faster Locum Processing (30d → 5d)</span>
+        </div>
+        <div class="metric-chip">
+          <span class="metric-accent">£9,000+</span>
+          <span class="metric-caption">Annual Cost Savings (In-House Rota)</span>
+        </div>
+        <div class="metric-chip">
+          <span class="metric-accent">2,500+</span>
+          <span class="metric-caption">Digital Approvals Audited</span>
+        </div>
+        <div class="metric-chip">
+          <span class="metric-accent">100%</span>
+          <span class="metric-caption">Audit Trail (Zero Lost Forms)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Directory Section -->
+    <section class="projects-directory-section">
+      <div class="directory-header">
+        <div class="directory-title-wrap">
+          <h2 class="directory-heading"><i class="fa-solid fa-folder-open"></i> Projects &amp; Case Studies</h2>
+          <span class="directory-sub">Click on any project to launch its interactive presentation slides</span>
+        </div>
+
+        <!-- Filter Pills & Search -->
+        <div class="directory-toolbar">
+          <div class="filter-pills" id="projectFilterGroup">
+            <button class="pill-btn active" data-filter="all">All (8)</button>
+            <button class="pill-btn" data-filter="power-bi">Power BI &amp; Analytics</button>
+            <button class="pill-btn" data-filter="digital-transformation">Digital Transformation</button>
+            <button class="pill-btn" data-filter="automation">Workflow Automation</button>
+            <button class="pill-btn" data-filter="systems">Systems &amp; Modeling</button>
+          </div>
+
+          <div class="search-input-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-ico"></i>
+            <input type="text" id="projectSearchInput" placeholder="Search by tool, keyword (e.g. 'DAX', '£9,000', 'Forms')..." aria-label="Search projects">
+          </div>
+        </div>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="projects-catalog-grid" id="projectsCatalogGrid">
+
+        <!-- Card 1: Retire and Return Digital Transformation -->
+        <div class="project-entry-card featured-entry" data-project-id="retire-return" data-category="digital-transformation automation" data-keywords="retire return nhs employers national case study award forms sharepoint power automate">
+          <div class="card-top-row">
+            <span class="org-label"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
+            <span class="award-pill"><i class="fa-solid fa-trophy"></i> National Best Practice</span>
+          </div>
+          <h3 class="entry-title">Digital Transformation of the Retire and Return Process</h3>
+          <p class="entry-desc">
+            Directed the digital overhaul of a legacy paper pathway plagued by lost forms (71% user difficulty). Replaced it with a 100% trackable automated system published nationally by NHS Employers.
+          </p>
+          <div class="entry-metric-badge positive">
+            <i class="fa-solid fa-circle-check"></i> 100% Trackable Workflow • 0 Lost Forms
+          </div>
+          <div class="entry-tech-tags">
+            <span>Microsoft Forms</span>
+            <span>SharePoint Lists</span>
+            <span>Power Automate</span>
+            <span>Agile PM</span>
+          </div>
+          <div class="entry-footer">
+            <span class="slide-count-hint"><i class="fa-solid fa-layer-group"></i> 3 Interactive Slides</span>
+            <button class="launch-deck-btn" onclick="openProjectDeck('retire-return')">
+              Launch Presentation <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: TempRE Vacancy Approvals System -->
+        <div class="project-entry-card" data-project-id="tempre-approvals" data-category="automation digital-transformation power-bi" data-keywords="tempre vacancy approvals bank staff gdo dcmo multi stage sharepoint power automate power bi">
+          <div class="card-top-row">
+            <span class="org-label"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
+            <span class="category-pill">Workflow Automation</span>
+          </div>
+          <h3 class="entry-title">TempRE Vacancy Approvals System (Bank Staff)</h3>
+          <p class="entry-desc">
+            Multi-stage digital approval system replacing manual handoffs. Enforces departmental budget validation, manages urgent escalations, and audits 2,560+ shift requests.
+          </p>
+          <div class="entry-metric-badge">
+            <i class="fa-solid fa-chart-line"></i> 2,569 Requests Audited • 92.6% Approved
+          </div>
+          <div class="entry-tech-tags">
+            <span>SharePoint</span>
+            <span>Power Automate</span>
+            <span>TempRE</span>
+            <span>Power BI</span>
+          </div>
+          <div class="entry-footer">
+            <span class="slide-count-hint"><i class="fa-solid fa-layer-group"></i> 4 Interactive Slides</span>
+            <button class="launch-deck-btn" onclick="openProjectDeck('tempre-approvals')">
+              Launch Presentation <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3: Power BI KPI & SLA Reporting Suite -->
+        <div class="project-entry-card" data-project-id="powerbi-kpis" data-category="power-bi" data-keywords="power bi dax kpi sla gauge charts rolling statistics monthly healthcare reporting time intelligence">
+          <div class="card-top-row">
+            <span class="org-label"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
+            <span class="category-pill">Power BI &amp; DAX</span>
+          </div>
+          <h3 class="entry-title">Healthcare KPI &amp; SLA Reporting Suite</h3>
+          <p class="entry-desc">
+            Production Power BI suite utilizing DAX time intelligence, 3 custom SLA gauge benchmarks, and live shift registers tracking £284,071 across 2,380 approved requests.
+          </p>
+          <div class="entry-metric-badge">
+            <i class="fa-solid fa-gauge-high"></i> 3 SLA Gauges • 15% Query Reduction
+          </div>
+          <div class="entry-tech-tags">
+            <span>Power BI</span>
+            <span>DAX Modeling</span>
+            <span>KPI Gauge Charts</span>
+            <span>SLA Tracking</span>
+          </div>
+          <div class="entry-footer">
+            <span class="slide-count-hint"><i class="fa-solid fa-layer-group"></i> 3 Interactive Slides</span>
+            <button class="launch-deck-btn" onclick="openProjectDeck('powerbi-kpis')">
+              Launch Presentation <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 4: Shift Spend Decomposition Tree & Winter Surge -->
+        <div class="project-entry-card" data-project-id="spend-decomp" data-category="power-bi systems" data-keywords="decomposition tree bank spend winter surge trend unit cost shift analysis emergency surgery medicine">
+          <div class="card-top-row">
+            <span class="org-label"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
+            <span class="category-pill">Root-Cause BI</span>
+          </div>
+          <h3 class="entry-title">Shift Spend Decomposition Tree &amp; Winter Surge</h3>
+          <p class="entry-desc">
+            AI Decomposition Tree root-cause analysis across 2,751 shifts by specialty and grade, accompanied by multi-year trend line tracking seasonal surge peaks (£0.62M in Jan 2026).
+          </p>
+          <div class="entry-metric-badge">
+            <i class="fa-solid fa-sitemap"></i> 2,751 Shifts • £590 Avg Shift Cost
+          </div>
+          <div class="entry-tech-tags">
+            <span>Decomposition Tree</span>
+            <span>Spend Forecasting</span>
+            <span>Trend Analysis</span>
+          </div>
+          <div class="entry-footer">
+            <span class="slide-count-hint"><i class="fa-solid fa-layer-group"></i> 3 Interactive Slides</span>
+            <button class="launch-deck-btn" onclick="openProjectDeck('spend-decomp')">
+              Launch Presentation <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 5: Bank & Locum Additional Assignment Forms -->
+        <div class="project-entry-card" data-project-id="locum-forms" data-category="digital-transformation automation power-bi" data-keywords="additional assignment forms locum bank 75% faster 30 days 5 days power apps sharepoint treemaps">
+          <div class="card-top-row">
+            <span class="org-label"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
+            <span class="category-pill accent-green">75% Faster</span>
+          </div>
+          <h3 class="entry-title">Bank &amp; Locum Additional Assignment Forms</h3>
+          <p class="entry-desc">
+            Re-engineered paper locum onboarding, slashing turnaround from 30 days to 5 days. Seamlessly processes 50+ weekly applications with direct Payroll integration and Treemap analytics.
+          </p>
+          <div class="entry-metric-badge positive">
+            <i class="fa-solid fa-bolt"></i> 30d → 5d Turnaround (75% Faster)
+          </div>
+          <div class="entry-tech-tags">
+            <span>Power Apps</span>
+            <span>Power Automate</span>
+            <span>SharePoint</span>
+            <span>Treemaps</span>
+          </div>
+          <div class="entry-footer">
+            <span class="slide-count-hint"><i class="fa-solid fa-layer-group"></i> 3 Interactive Slides</span>
+            <button class="launch-deck-btn" onclick="openProjectDeck('locum-forms')">
+              Launch Presentation <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 6: Team Operations Performance & Invoicing SLA -->
+        <div class="project-entry-card" data-project-id="team-ops" data-category="power-bi systems" data-keywords="team summaries invoicing sla emails aging compliance admin ahp medics nursing">
+          <div class="card-top-row">
+            <span class="org-label"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
+            <span class="category-pill">Operations Cockpit</span>
+          </div>
+          <h3 class="entry-title">Team Operations &amp; Invoicing SLA Tracker</h3>
+          <p class="entry-desc">
+            Cross-departmental management dashboard monitoring 438 weekly emails across Admin, AHP, Medics, and Nursing teams, featuring aging communication flags and agency invoice dispute governance.
+          </p>
+          <div class="entry-metric-badge">
+            <i class="fa-solid fa-envelope"></i> 438 Weekly Emails • Invoice Auditing
+          </div>
+          <div class="entry-tech-tags">
+            <span>Stacked Visuals</span>
+            <span>SLA Aging</span>
+            <span>Invoice Governance</span>
+          </div>
+          <div class="entry-footer">
+            <span class="slide-count-hint"><i class="fa-solid fa-layer-group"></i> 2 Interactive Slides</span>
+            <button class="launch-deck-btn" onclick="openProjectDeck('team-ops')">
+              Launch Presentation <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 7: McKesson UK - Excel Scheduling & Forecasting -->
+        <div class="project-entry-card" data-project-id="mckesson-system" data-category="systems automation" data-keywords="mckesson masta excel scheduling forecasting £9000 cost savings covid-19 rota">
+          <div class="card-top-row">
+            <span class="org-label"><i class="fa-solid fa-briefcase-medical"></i> McKesson UK (MASTA)</span>
+            <span class="category-pill accent-green">£9,000 Saved</span>
+          </div>
+          <h3 class="entry-title">Excel-Based Rota Scheduling &amp; Demand Forecasting</h3>
+          <p class="entry-desc">
+            Devised an in-house Excel forecasting and clinical rota system replacing costly external software, saving ~£9,000 annually while adapting resource allocation to COVID-19 pandemic demands.
+          </p>
+          <div class="entry-metric-badge positive">
+            <i class="fa-solid fa-piggy-bank"></i> £9,000 Recurring Annual Cost Savings
+          </div>
+          <div class="entry-tech-tags">
+            <span>Advanced Excel</span>
+            <span>Forecasting Models</span>
+            <span>Power Automate</span>
+          </div>
+          <div class="entry-footer">
+            <span class="slide-count-hint"><i class="fa-solid fa-layer-group"></i> 2 Interactive Slides</span>
+            <button class="launch-deck-btn" onclick="openProjectDeck('mckesson-system')">
+              Launch Presentation <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 8: CurrentRMS Full Implementation -->
+        <div class="project-entry-card" data-project-id="city-av" data-category="systems digital-transformation" data-keywords="currentrms implementation city audio visual cav uat testing crm inventory sage">
+          <div class="card-top-row">
+            <span class="org-label"><i class="fa-solid fa-building"></i> City Audio Visual Ltd</span>
+            <span class="category-pill">System Delivery</span>
+          </div>
+          <h3 class="entry-title">CurrentRMS Cloud System Implementation</h3>
+          <p class="entry-desc">
+            Led full lifecycle rollout of CurrentRMS software, coordinating vendor testing, UAT, SOP authoring, and staff training to modernize inventory tracking and CRM workflows.
+          </p>
+          <div class="entry-metric-badge">
+            <i class="fa-solid fa-server"></i> 100% Staff Onboarding • Sage CRM
+          </div>
+          <div class="entry-tech-tags">
+            <span>CurrentRMS</span>
+            <span>Sage Accounts</span>
+            <span>UAT Testing</span>
+            <span>SOP Documentation</span>
+          </div>
+          <div class="entry-footer">
+            <span class="slide-count-hint"><i class="fa-solid fa-layer-group"></i> 2 Interactive Slides</span>
+            <button class="launch-deck-btn" onclick="openProjectDeck('city-av')">
+              Launch Presentation <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =======================================================================
+       PROJECT PRESENTATION DECK THEATER (FULLSCREEN POWERPOINT MODAL)
+       Launched when clicking any project card
+       ======================================================================= -->
+  <div class="deck-modal-theater" id="deckModal" role="dialog" aria-modal="true" aria-label="Interactive Project Presentation Deck">
     
-    <!-- Left Slide Thumbnail Rail (Collapsible) -->
-    <aside class="slide-rail" id="slideRail" aria-label="Slide thumbnail navigation">
-      <div class="rail-header">
-        <span>SLIDES (12)</span>
-        <button class="rail-toggle-btn" id="railToggleBtn" title="Collapse / Expand Thumbnail Rail">
-          <i class="fa-solid fa-chevron-left"></i>
+    <!-- Presentation Top Bar -->
+    <header class="deck-theater-header">
+      <div class="theater-header-left">
+        <button class="back-to-hub-btn" id="deckBackBtn" title="Back to Projects Hub [Press Esc]">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Projects Hub</span>
         </button>
+        <span class="deck-header-divider">|</span>
+        <div class="deck-project-badge" id="deckProjectBadge">
+          <span class="badge-dot"></span>
+          <span id="deckProjectTitle">Project Title</span>
+        </div>
       </div>
-      <div class="rail-list" id="railList">
-        <!-- Generated Dynamically by JS -->
+
+      <div class="theater-header-center">
+        <div class="deck-slide-title-pill" id="deckSlideTitlePill">
+          <span id="deckCurrentSlideTitle">Slide 1: Executive Overview</span>
+        </div>
       </div>
-    </aside>
 
-    <!-- Slide Canvas Stage -->
-    <main class="deck-stage" id="deckStage">
-      
-      <!-- SLIDE 1: Executive Overview & Interactive Project Hub -->
-      <section class="deck-slide active" data-slide-id="overview" data-title="Executive Overview &amp; Project Hub" data-num="1">
-        <div class="slide-content-wrapper slide-hub-layout">
-          
-          <div class="hub-left-col">
-            <div class="slide-badge-pill">
-              <i class="fa-solid fa-award"></i> NHS Employers National Case Study Awardee
-            </div>
-            
-            <h1 class="hub-hero-title">
-              Hi, I'm <span class="gradient-text">Santosh Limbu</span>
-            </h1>
-            <h2 class="hub-hero-role">Project Support Officer &amp; Power BI Data Analyst</h2>
-            
-            <div class="dynamic-bio-container" id="hubBioBox">
-              <p class="hub-bio-text" id="hubBioText">
-                Data-focused project professional with 5+ years of experience transforming complex healthcare datasets into intuitive, high-impact Power BI dashboards. Proficient in advanced DAX modeling, KPI gauge tracking against SLAs, and decomposition trees for root-cause analysis that empower clinical and executive stakeholders to independently make data-driven decisions.
-              </p>
-            </div>
-
-            <!-- Key Metric Counters -->
-            <div class="hub-metric-tiles">
-              <div class="metric-tile">
-                <span class="metric-val">75%</span>
-                <span class="metric-sub">Faster Turnaround (30d → 5d)</span>
-              </div>
-              <div class="metric-tile">
-                <span class="metric-val">£9,000+</span>
-                <span class="metric-sub">Annual Cost Savings</span>
-              </div>
-              <div class="metric-tile">
-                <span class="metric-val">2,500+</span>
-                <span class="metric-sub">Digital Approvals Audited</span>
-              </div>
-              <div class="metric-tile">
-                <span class="metric-val">100%</span>
-                <span class="metric-sub">Audit Trail (0 Lost Forms)</span>
-              </div>
-            </div>
-
-            <!-- Meta details & Actions -->
-            <div class="hub-meta-actions">
-              <div class="hub-meta-row">
-                <span><i class="fa-solid fa-location-dot"></i> Coventry, UK</span>
-                <span><i class="fa-solid fa-envelope"></i> s.limbu@hotmail.com</span>
-                <span><i class="fa-solid fa-phone"></i> 07473 633112</span>
-              </div>
-              <div class="hub-button-row">
-                <button class="slide-action-btn primary" onclick="deck.goToSlide(2)">
-                  <i class="fa-solid fa-play"></i> Start Slide Presentation
-                </button>
-                <button class="slide-action-btn outline" id="copyEmailDeckBtn">
-                  <i class="fa-regular fa-copy"></i> <span id="copyEmailDeckText">Copy Email</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="hub-right-col">
-            <div class="hub-projects-shelf">
-              <div class="shelf-header">
-                <h3><i class="fa-solid fa-folder-open"></i> Project Directory &amp; Slides</h3>
-                <span class="shelf-hint">Click any tile to jump to interactive slide</span>
-              </div>
-              
-              <div class="shelf-grid">
-                <div class="project-jump-card award-card" onclick="deck.goToSlide(2)">
-                  <div class="jump-card-top">
-                    <span class="jump-num">02</span>
-                    <span class="mini-award"><i class="fa-solid fa-trophy"></i> National Best Practice</span>
-                  </div>
-                  <h4>Retire &amp; Return Digital Overhaul</h4>
-                  <p>MS Forms + SharePoint + Power Automate workflow</p>
-                  <span class="jump-link">Open Slide <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="project-jump-card" onclick="deck.goToSlide(3)">
-                  <div class="jump-card-top">
-                    <span class="jump-num">03</span>
-                    <span class="jump-tag">Workflow Automation</span>
-                  </div>
-                  <h4>TempRE Vacancy Approvals System</h4>
-                  <p>2,500+ shift requests, multi-tier approval logic</p>
-                  <span class="jump-link">Open Slide <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="project-jump-card" onclick="deck.goToSlide(4)">
-                  <div class="jump-card-top">
-                    <span class="jump-num">04</span>
-                    <span class="jump-tag">Power BI</span>
-                  </div>
-                  <h4>Healthcare KPI &amp; SLA Gauges</h4>
-                  <p>DAX rolling metrics &amp; SLA compliance gauges</p>
-                  <span class="jump-link">Open Slide <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="project-jump-card" onclick="deck.goToSlide(5)">
-                  <div class="jump-card-top">
-                    <span class="jump-num">05</span>
-                    <span class="jump-tag">Spend Analytics</span>
-                  </div>
-                  <h4>Spend Decomposition Tree &amp; Trends</h4>
-                  <p>AI Decomposition Tree &amp; £0.62M winter surge line</p>
-                  <span class="jump-link">Open Slide <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="project-jump-card" onclick="deck.goToSlide(6)">
-                  <div class="jump-card-top">
-                    <span class="jump-num">06</span>
-                    <span class="jump-tag">75% Faster</span>
-                  </div>
-                  <h4>Locum Additional Assignment Forms</h4>
-                  <p>30d to 5d cycle time; 50+ weekly applications</p>
-                  <span class="jump-link">Open Slide <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-
-                <div class="project-jump-card" onclick="deck.goToSlide(8)">
-                  <div class="jump-card-top">
-                    <span class="jump-num">08</span>
-                    <span class="jump-tag">£9k Savings</span>
-                  </div>
-                  <h4>McKesson Excel Rota &amp; Forecasting</h4>
-                  <p>In-house scheduling system saving £9,000 annually</p>
-                  <span class="jump-link">Open Slide <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 2: Retire & Return Digital Transformation (National Case Study) -->
-      <section class="deck-slide" data-slide-id="retire-return" data-title="Retire &amp; Return Digital Transformation" data-num="2">
-        <div class="slide-content-wrapper slide-split-layout">
-          
-          <div class="slide-narrative-col">
-            <div class="slide-meta-row">
-              <span class="org-badge"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
-              <span class="badge-award"><i class="fa-solid fa-trophy"></i> Published National Case Study by NHS Employers</span>
-            </div>
-
-            <h2 class="slide-headline">Digital Transformation of the Retire and Return Process</h2>
-            <p class="slide-lead">
-              Directed the complete digital overhaul of a legacy, paper-based pathway that previously suffered from misplaced documentation, cross-departmental friction, and poor satisfaction into an automated, 100% trackable digital workflow.
-            </p>
-
-            <div class="sub-tabs-container">
-              <div class="sub-tab-buttons">
-                <button class="sub-tab-btn active" data-tab="rr-challenge">The Challenge</button>
-                <button class="sub-tab-btn" data-tab="rr-actions">Technical Actions</button>
-                <button class="sub-tab-btn" data-tab="rr-outcomes">Impact &amp; Results</button>
-              </div>
-
-              <div class="sub-tab-content active" id="rr-challenge">
-                <div class="stat-highlight-box negative">
-                  <div class="stat-item"><span class="val">71%</span> <span class="lbl">Staff found previous process complicated</span></div>
-                  <div class="stat-item"><span class="val">32%</span> <span class="lbl">Manager satisfaction rate before overhaul</span></div>
-                </div>
-                <p class="tab-paragraph">
-                  Physical forms frequently went missing between HR, Payroll, and clinical managers. Applicants had no visibility into their status, leading to repeated queries and substantial processing delays for vital returning healthcare staff.
-                </p>
-              </div>
-
-              <div class="sub-tab-content" id="rr-actions">
-                <ul class="slide-feature-list">
-                  <li><strong>Process Mapping:</strong> Facilitated cross-functional workshops with HR, Payroll, and Clinical management to eliminate bottlenecks.</li>
-                  <li><strong>Automated Routing:</strong> Engineered Microsoft Forms intake routing dynamic multi-stage approvals in Power Automate.</li>
-                  <li><strong>Centralized Worklist:</strong> Configured a transparent SharePoint register tracking every application in real time.</li>
-                  <li><strong>Automated Communications:</strong> Built triggers to keep applicants and managers updated throughout every approval phase.</li>
-                </ul>
-              </div>
-
-              <div class="sub-tab-content" id="rr-outcomes">
-                <div class="stat-highlight-box positive">
-                  <div class="stat-item"><span class="val">100%</span> <span class="lbl">Traceability (Zero Lost Paperwork)</span></div>
-                  <div class="stat-item"><span class="val">National</span> <span class="lbl">Exemplar Case Study Recognition</span></div>
-                </div>
-                <p class="tab-paragraph">
-                  Accelerated turnaround, earned internal organizational awards, and was published nationally by <strong>NHS Employers</strong> as an exemplar digital transformation case study.
-                </p>
-              </div>
-            </div>
-
-            <div class="slide-tech-footer">
-              <span class="pill-tag"><i class="fa-solid fa-clipboard-question"></i> Microsoft Forms</span>
-              <span class="pill-tag"><i class="fa-solid fa-table-list"></i> SharePoint Online</span>
-              <span class="pill-tag"><i class="fa-solid fa-bolt"></i> Power Automate</span>
-              <span class="pill-tag"><i class="fa-solid fa-users"></i> Agile Process Mapping</span>
-            </div>
-          </div>
-
-          <div class="slide-visual-col">
-            <div class="visual-deck-card">
-              <div class="visual-deck-header">
-                <h4><i class="fa-solid fa-diagram-project"></i> Architecture Workflow</h4>
-                <span class="badge-status">Production System</span>
-              </div>
-              <div class="workflow-steps-graphic">
-                <div class="workflow-step">
-                  <div class="step-icon"><i class="fa-solid fa-file-pen"></i></div>
-                  <div class="step-text">
-                    <strong>1. Digital Intake</strong>
-                    <span>Standardized MS Forms captures structured criteria</span>
-                  </div>
-                </div>
-                <div class="workflow-step-connector"><i class="fa-solid fa-arrow-down"></i></div>
-                <div class="workflow-step">
-                  <div class="step-icon"><i class="fa-solid fa-code-branch"></i></div>
-                  <div class="step-text">
-                    <strong>2. Power Automate Logic</strong>
-                    <span>Conditional approval routing based on staff band &amp; clinic</span>
-                  </div>
-                </div>
-                <div class="workflow-step-connector"><i class="fa-solid fa-arrow-down"></i></div>
-                <div class="workflow-step">
-                  <div class="step-icon"><i class="fa-solid fa-database"></i></div>
-                  <div class="step-text">
-                    <strong>3. SharePoint Status Register</strong>
-                    <span>Real-time audit log with 100% decision history</span>
-                  </div>
-                </div>
-                <div class="workflow-step-connector"><i class="fa-solid fa-arrow-down"></i></div>
-                <div class="workflow-step">
-                  <div class="step-icon"><i class="fa-solid fa-envelope-circle-check"></i></div>
-                  <div class="step-text">
-                    <strong>4. Automated Stakeholder Alerts</strong>
-                    <span>Instant notifications sent to Applicant, Manager &amp; Payroll</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 3: TempRE Vacancy Approvals System -->
-      <section class="deck-slide" data-slide-id="tempre-approvals" data-title="TempRE Vacancy Approvals System" data-num="3">
-        <div class="slide-content-wrapper slide-split-layout">
-          
-          <div class="slide-narrative-col">
-            <div class="slide-meta-row">
-              <span class="org-badge"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
-              <span class="pill-badge">Workflow Automation &amp; Audit</span>
-            </div>
-
-            <h2 class="slide-headline">TempRE Vacancy Approvals System (Bank Staff)</h2>
-            <p class="slide-lead">
-              Automated end-to-end multi-tier vacancy approval workflow replacing manual paper handoffs. Enforces rigorous budget checks, handles urgent escalations, and ensures only approved vacancies reach the TempRE system.
-            </p>
-
-            <div class="slide-key-stats-row">
-              <div class="key-stat">
-                <span class="stat-big">2,569</span>
-                <span class="stat-sub">Requests Tracked</span>
-              </div>
-              <div class="key-stat">
-                <span class="stat-big">92.6%</span>
-                <span class="stat-sub">Approved (2,380)</span>
-              </div>
-              <div class="key-stat">
-                <span class="stat-big">110</span>
-                <span class="stat-sub">Urgent Escalations</span>
-              </div>
-            </div>
-
-            <div class="slide-bullets-box">
-              <div class="bullet-item">
-                <i class="fa-solid fa-check-circle"></i>
-                <span><strong>Multi-Stage Logic:</strong> Power Automate flows handle Standard, Urgent, and Amended request criteria seamlessly.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-check-circle"></i>
-                <span><strong>Stakeholder Sync:</strong> Real-time automated hand-offs between Requesting Depts, TSS, GDO, and DCMO.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-check-circle"></i>
-                <span><strong>Agile Iteration:</strong> Iterative testing with clinical managers delivered continuous quality-of-life enhancements.</span>
-              </div>
-            </div>
-
-            <div class="slide-tech-footer">
-              <span class="pill-tag"><i class="fa-solid fa-table-list"></i> SharePoint</span>
-              <span class="pill-tag"><i class="fa-solid fa-bolt"></i> Power Automate</span>
-              <span class="pill-tag"><i class="fa-solid fa-clipboard-question"></i> MS Forms</span>
-              <span class="pill-tag"><i class="fa-solid fa-hospital-user"></i> TempRE</span>
-              <span class="pill-tag"><i class="fa-solid fa-chart-column"></i> Power BI</span>
-            </div>
-          </div>
-
-          <div class="slide-visual-col">
-            <div class="visual-deck-card">
-              <div class="visual-deck-header">
-                <h4><i class="fa-solid fa-chart-line"></i> Production Dashboard View</h4>
-                <div class="image-switcher-controls">
-                  <button class="switcher-btn active" data-img-target="img-tempre-all">All Approvals (2.5k)</button>
-                  <button class="switcher-btn" data-img-target="img-tempre-urgent">Urgent Tracker</button>
-                  <button class="switcher-btn" data-img-target="img-tempre-prog">Progress Tracker</button>
-                </div>
-              </div>
-
-              <div class="slide-image-display">
-                <img id="img-tempre-all" class="deck-preview-img active" src="assets/images/dashboard-tempre-all-approvals.png" alt="TempRE All Approvals Dashboard" onclick="deck.zoomImage(this.src, 'TempRE Vacancy Approvals: 2,569 Total Pipeline', 'Trust-wide approval volume dashboard monitoring 2,569 total requests, displaying weekly spikes, status distribution, and completion trajectories.')">
-                <img id="img-tempre-urgent" class="deck-preview-img" src="assets/images/dashboard-tempre-urgent-approvals.png" alt="TempRE Urgent Approvals Dashboard" onclick="deck.zoomImage(this.src, 'TempRE Urgent Approvals Tracker', 'Isolating 110 urgent clinical shifts (103 approved) with rejection diagnostics for GDO and DCMO officers.')">
-                <img id="img-tempre-prog" class="deck-preview-img" src="assets/images/dashboard-tempre-progress-tracker.png" alt="TempRE Progress Tracker" onclick="deck.zoomImage(this.src, 'TempRE Progress Tracker & Shift Details', 'Interactive 4-stage visual progress tracker with automated budget validation checkmark and shift calendar.')">
-                
-                <div class="zoom-badge-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Click image to inspect high-res</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 4: Power BI KPI & SLA Reporting Suite -->
-      <section class="deck-slide" data-slide-id="powerbi-kpis" data-title="Power BI KPI &amp; SLA Reporting Suite" data-num="4">
-        <div class="slide-content-wrapper slide-split-layout">
-          
-          <div class="slide-narrative-col">
-            <div class="slide-meta-row">
-              <span class="org-badge"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
-              <span class="pill-badge">Advanced Data Modeling &amp; DAX</span>
-            </div>
-
-            <h2 class="slide-headline">Power BI Healthcare KPI &amp; SLA Reporting Suite</h2>
-            <p class="slide-lead">
-              Executive reporting suite built with advanced DAX calculations, live KPI gauge benchmarks against NHS SLAs, and interactive drill-throughs that reduced stakeholder reporting queries by 15%.
-            </p>
-
-            <div class="kpi-gauge-metrics-box">
-              <div class="gauge-metric-card">
-                <span class="gauge-label">Shifts Linked SLA</span>
-                <span class="gauge-value">2.06 <small>days</small></span>
-                <span class="gauge-sub">Target &lt; 2.5d</span>
-              </div>
-              <div class="gauge-metric-card">
-                <span class="gauge-label">GDO Approvals SLA</span>
-                <span class="gauge-value">1.30 <small>days</small></span>
-                <span class="gauge-sub">Target &lt; 2.0d</span>
-              </div>
-              <div class="gauge-metric-card">
-                <span class="gauge-label">DCMO Approvals</span>
-                <span class="gauge-value">0.07 <small>days</small></span>
-                <span class="gauge-sub">Urgent Escalation</span>
-              </div>
-              <div class="gauge-metric-card highlight">
-                <span class="gauge-label">Avg Turnaround</span>
-                <span class="gauge-value">4.43 <small>days</small></span>
-                <span class="gauge-sub">Total Lifecycle</span>
-              </div>
-            </div>
-
-            <div class="slide-bullets-box">
-              <div class="bullet-item">
-                <i class="fa-solid fa-gauge-high"></i>
-                <span><strong>DAX Time Intelligence:</strong> Rolling totals, elapsed days, and dynamic SLA boundary status coloring.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-coins"></i>
-                <span><strong>£284,071 Live Spend Tracked:</strong> Real-time financial spend register linked directly to individual shift rosters.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-filter"></i>
-                <span><strong>Specialty Slicers:</strong> Instant drill-downs for Anaesthetics, General Surgery, Acute Medicine, and Paediatrics.</span>
-              </div>
-            </div>
-
-            <div class="slide-tech-footer">
-              <span class="pill-tag"><i class="fa-solid fa-chart-pie"></i> Power BI</span>
-              <span class="pill-tag"><i class="fa-solid fa-code"></i> DAX Modeling</span>
-              <span class="pill-tag"><i class="fa-solid fa-filter"></i> Power Query</span>
-              <span class="pill-tag"><i class="fa-solid fa-gauge"></i> KPI Gauge Charts</span>
-            </div>
-          </div>
-
-          <div class="slide-visual-col">
-            <div class="visual-deck-card">
-              <div class="visual-deck-header">
-                <h4><i class="fa-solid fa-gauge"></i> Production KPI Dashboards</h4>
-                <div class="image-switcher-controls">
-                  <button class="switcher-btn active" data-img-target="img-kpi-rolling">Rolling Total Stats (£284k)</button>
-                  <button class="switcher-btn" data-img-target="img-kpi-monthly">Monthly View (Jan 2026)</button>
-                </div>
-              </div>
-
-              <div class="slide-image-display">
-                <img id="img-kpi-rolling" class="deck-preview-img active" src="assets/images/dashboard-kpi-rolling-statistics.png" alt="KPI Rolling Statistics Dashboard" onclick="deck.zoomImage(this.src, 'KPI Rolling Total Statistics (13 Oct 2025 - 10 Feb 2026)', 'Executive dashboard with 3 SLA gauges, 4.43 days avg turnaround, and £284,071.48 spend tracked across 2,380 approved requests.')">
-                <img id="img-kpi-monthly" class="deck-preview-img" src="assets/images/dashboard-kpi-monthly-statistics.png" alt="KPI Monthly Statistics Dashboard" onclick="deck.zoomImage(this.src, 'KPI Monthly Statistics (January 2026)', 'Granular monthly view tracking 687 approved requests with 3.93 days average completion and specialty-level spend breakdown.')">
-                
-                <div class="zoom-badge-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Click image to inspect high-res</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 5: Power BI Spend Decomposition & Trend Analysis -->
-      <section class="deck-slide" data-slide-id="powerbi-spend" data-title="Spend Decomposition &amp; Trend Analysis" data-num="5">
-        <div class="slide-content-wrapper slide-split-layout">
-          
-          <div class="slide-narrative-col">
-            <div class="slide-meta-row">
-              <span class="org-badge"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
-              <span class="pill-badge">Root-Cause Analytics &amp; Forecasting</span>
-            </div>
-
-            <h2 class="slide-headline">Shift Spend Decomposition Tree &amp; Multi-Year Surge</h2>
-            <p class="slide-lead">
-              Leveraged Power BI's AI Decomposition Tree to perform root-cause analysis on 2,751 shifts by clinical division, coupled with multi-year spend trends tracking winter operational pressures.
-            </p>
-
-            <div class="spend-insights-grid">
-              <div class="insight-box">
-                <div class="insight-val">£590.11</div>
-                <div class="insight-lbl">Average Cost per Shift</div>
-              </div>
-              <div class="insight-box">
-                <div class="insight-val">2,751</div>
-                <div class="insight-lbl">Shifts Categorized</div>
-              </div>
-              <div class="insight-box highlight">
-                <div class="insight-val">£0.62M</div>
-                <div class="insight-lbl">Winter Peak Spend (Jan 2026)</div>
-              </div>
-            </div>
-
-            <div class="slide-bullets-box">
-              <div class="bullet-item">
-                <i class="fa-solid fa-sitemap"></i>
-                <span><strong>AI Decomposition Tree:</strong> Deconstructs shift counts into Surgical Services (836), Emergency Medicine (639), and General Medicine (577).</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-arrow-trend-up"></i>
-                <span><strong>Surge Trend Line:</strong> Highlights historical seasonal spend spikes from October baseline (£0.02M) to winter peaks (£0.62M).</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-user-doctor"></i>
-                <span><strong>Staff Grade Slicers:</strong> Interactive filters for Consultant, FY1, FY2, GP, and ST3+ shifts with fragile service flags.</span>
-              </div>
-            </div>
-
-            <div class="slide-tech-footer">
-              <span class="pill-tag"><i class="fa-solid fa-sitemap"></i> Decomposition Tree</span>
-              <span class="pill-tag"><i class="fa-solid fa-chart-line"></i> Spend Trend Forecasting</span>
-              <span class="pill-tag"><i class="fa-solid fa-code"></i> DAX Calculations</span>
-              <span class="pill-tag"><i class="fa-solid fa-calculator"></i> Unit Cost Metrics</span>
-            </div>
-          </div>
-
-          <div class="slide-visual-col">
-            <div class="visual-deck-card">
-              <div class="visual-deck-header">
-                <h4><i class="fa-solid fa-sitemap"></i> Shift Data Decomposition &amp; Bank Spend</h4>
-                <span class="badge-status">AI Visual</span>
-              </div>
-
-              <div class="slide-image-display">
-                <img class="deck-preview-img active" src="assets/images/dashboard-shift-decomp-spend.png" alt="Shift Decomposition Tree and Bank Spend Trend" onclick="deck.zoomImage(this.src, 'TempRE Vacancy Shift Data & Bank Spend Trend', 'AI Decomposition Tree breaking down 2,751 shifts by clinical division alongside a multi-year bank spend curve peaking at £0.62M.')">
-                <div class="zoom-badge-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Click image to inspect high-res</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 6: Bank & Locum Additional Assignment Forms (75% Faster) -->
-      <section class="deck-slide" data-slide-id="locum-forms" data-title="Locum Additional Assignment Forms" data-num="6">
-        <div class="slide-content-wrapper slide-split-layout">
-          
-          <div class="slide-narrative-col">
-            <div class="slide-meta-row">
-              <span class="org-badge"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
-              <span class="badge-accent"><i class="fa-solid fa-bolt"></i> 75% Processing Improvement</span>
-            </div>
-
-            <h2 class="slide-headline">Digital Transformation of Bank &amp; Locum Application Forms</h2>
-            <p class="slide-lead">
-              Re-engineered the paper-based onboarding application pathway. Slashed turnaround from 30 days to 5 days, handling 50+ weekly applications with zero lost files and direct Payroll integration.
-            </p>
-
-            <div class="stat-highlight-box positive">
-              <div class="stat-item"><span class="val">30d → 5d</span> <span class="lbl">75% Reduction in Cycle Time</span></div>
-              <div class="stat-item"><span class="val">50+</span> <span class="lbl">Weekly Applications Processed</span></div>
-              <div class="stat-item"><span class="val">900</span> <span class="lbl">Intake Tracked in 31-Day Period</span></div>
-            </div>
-
-            <div class="slide-bullets-box">
-              <div class="bullet-item">
-                <i class="fa-solid fa-check-circle"></i>
-                <span><strong>Treemap Segmentation:</strong> Visualizes applicant groups across Medical &amp; Dental (116), Nursing (64), and Support Workers.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-check-circle"></i>
-                <span><strong>Right-to-Work (RTW) Tracking:</strong> Proactively highlights pending RTW verifications to avoid onboarding bottlenecks.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-check-circle"></i>
-                <span><strong>Payroll Direct Feed:</strong> Automated data handoff into NHS payroll workflows eliminates manual re-entry errors.</span>
-              </div>
-            </div>
-
-            <div class="slide-tech-footer">
-              <span class="pill-tag"><i class="fa-solid fa-mobile-screen"></i> Power Apps</span>
-              <span class="pill-tag"><i class="fa-solid fa-bolt"></i> Power Automate</span>
-              <span class="pill-tag"><i class="fa-solid fa-table-list"></i> SharePoint</span>
-              <span class="pill-tag"><i class="fa-solid fa-chart-column"></i> Power BI Treemaps</span>
-            </div>
-          </div>
-
-          <div class="slide-visual-col">
-            <div class="visual-deck-card">
-              <div class="visual-deck-header">
-                <h4><i class="fa-solid fa-table-cells-large"></i> Locum Operational Dashboards</h4>
-                <div class="image-switcher-controls">
-                  <button class="switcher-btn active" data-img-target="img-month-900">31-Day Summary (900 Forms)</button>
-                  <button class="switcher-btn" data-img-target="img-month-191">Daily Intake &amp; RTW Checks</button>
-                </div>
-              </div>
-
-              <div class="slide-image-display">
-                <img id="img-month-900" class="deck-preview-img active" src="assets/images/dashboard-month-summary-900.png" alt="31 Day Month Summary 900 Intake" onclick="deck.zoomImage(this.src, 'Additional Assignments 31-Day Summary (900 Applications)', 'Operational intake dashboard tracking 900 applications, status distribution, and employed group Treemap.')">
-                <img id="img-month-191" class="deck-preview-img" src="assets/images/dashboard-month-summary-191.png" alt="Daily Intake and Status Treemap" onclick="deck.zoomImage(this.src, 'Daily Flow & Status Treemap (191 Applications)', 'Granular day-by-day intake curve with RTW check tracking and status transitions.')">
-                
-                <div class="zoom-badge-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Click image to inspect high-res</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 7: Team Operations & Invoicing SLA Tracker -->
-      <section class="deck-slide" data-slide-id="team-ops" data-title="Team Operations &amp; Invoicing SLA Tracker" data-num="7">
-        <div class="slide-content-wrapper slide-split-layout">
-          
-          <div class="slide-narrative-col">
-            <div class="slide-meta-row">
-              <span class="org-badge"><i class="fa-solid fa-hospital"></i> UHCW NHS Trust</span>
-              <span class="pill-badge">Cross-Team Cockpit &amp; Finance</span>
-            </div>
-
-            <h2 class="slide-headline">Team Operational Performance &amp; Invoicing Tracker</h2>
-            <p class="slide-lead">
-              Cross-departmental management dashboard monitoring 438 weekly communications across Admin, AHP, Medics, and Nursing teams, incorporating invoice dispute auditing and SLA tracking.
-            </p>
-
-            <div class="spend-insights-grid">
-              <div class="insight-box">
-                <div class="insight-val">438</div>
-                <div class="insight-lbl">Weekly Communications</div>
-              </div>
-              <div class="insight-box">
-                <div class="insight-val">4 Teams</div>
-                <div class="insight-lbl">Admin, AHP, Medics, Nursing</div>
-              </div>
-              <div class="insight-box highlight">
-                <div class="insight-val">100%</div>
-                <div class="insight-lbl">Invoice Dispute Visibility</div>
-              </div>
-            </div>
-
-            <div class="slide-bullets-box">
-              <div class="bullet-item">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                <span><strong>Aging Communication Alerts:</strong> Visual flags highlight oldest pending emails to prevent communication bottlenecks.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-receipt"></i>
-                <span><strong>Agency Invoice Governance:</strong> Categorizes invoices into Processed, Disputed with Agency, and Overdue (&gt;30d).</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-list-check"></i>
-                <span><strong>Checklist Compliance:</strong> Real-time monitoring of AHP requests and Medics pending compliance checklists.</span>
-              </div>
-            </div>
-
-            <div class="slide-tech-footer">
-              <span class="pill-tag"><i class="fa-solid fa-chart-bar"></i> Stacked Bar Visuals</span>
-              <span class="pill-tag"><i class="fa-solid fa-envelope"></i> SLA Tracking</span>
-              <span class="pill-tag"><i class="fa-solid fa-file-invoice"></i> Invoicing Governance</span>
-              <span class="pill-tag"><i class="fa-solid fa-users"></i> Workload Distribution</span>
-            </div>
-          </div>
-
-          <div class="slide-visual-col">
-            <div class="visual-deck-card">
-              <div class="visual-deck-header">
-                <h4><i class="fa-solid fa-users-viewfinder"></i> Team Cockpit &amp; Invoicing</h4>
-                <span class="badge-status">Operational</span>
-              </div>
-
-              <div class="slide-image-display">
-                <img class="deck-preview-img active" src="assets/images/dashboard-team-summaries-sla.png" alt="Team Operations and Invoicing Tracker" onclick="deck.zoomImage(this.src, 'Team Performance & Invoicing SLA Tracker', 'Multi-department operational dashboard tracking 438 weekly emails, oldest communications, and agency invoice disputes.')">
-                <div class="zoom-badge-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Click image to inspect high-res</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 8: McKesson UK - Excel Scheduling & Forecasting System (£9,000 Saved) -->
-      <section class="deck-slide" data-slide-id="mckesson-system" data-title="McKesson Scheduling &amp; Forecasting" data-num="8">
-        <div class="slide-content-wrapper slide-split-layout">
-          
-          <div class="slide-narrative-col">
-            <div class="slide-meta-row">
-              <span class="org-badge"><i class="fa-solid fa-briefcase-medical"></i> McKesson UK (MASTA Travel Health)</span>
-              <span class="badge-accent"><i class="fa-solid fa-coins"></i> £9,000 Annual Savings</span>
-            </div>
-
-            <h2 class="slide-headline">Excel-Based Rota Scheduling &amp; Demand Forecasting Model</h2>
-            <p class="slide-lead">
-              Devised and deployed an integrated Excel forecasting and clinical rota system to replace costly commercial software, delivering ~£9,000 in recurring annual savings while navigating COVID-19 pandemic resource constraints.
-            </p>
-
-            <div class="stat-highlight-box positive">
-              <div class="stat-item"><span class="val">£9,000</span> <span class="lbl">Annual Software License Savings</span></div>
-              <div class="stat-item"><span class="val">100%</span> <span class="lbl">Operational Rota Reliability</span></div>
-              <div class="stat-item"><span class="val">Pandemic</span> <span class="lbl">Agile Resource Redeployment</span></div>
-            </div>
-
-            <div class="slide-bullets-box">
-              <div class="bullet-item">
-                <i class="fa-solid fa-chart-simple"></i>
-                <span><strong>Forecasting Models:</strong> Formulated complex workbook models to forecast clinic utilization and nurse coverage.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-virus"></i>
-                <span><strong>COVID-19 Response:</strong> Rapidly adjusted scheduling to meet shifting travel regulations and clinic closures.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-bolt"></i>
-                <span><strong>Automated Alerts:</strong> Built Power Automate workflows for automated reminder notices and executive reports.</span>
-              </div>
-            </div>
-
-            <div class="slide-tech-footer">
-              <span class="pill-tag"><i class="fa-solid fa-file-excel"></i> Advanced Excel</span>
-              <span class="pill-tag"><i class="fa-solid fa-chart-line"></i> Demand Forecasting</span>
-              <span class="pill-tag"><i class="fa-solid fa-bolt"></i> Power Automate</span>
-              <span class="pill-tag"><i class="fa-solid fa-user-nurse"></i> Clinical Rota Allocation</span>
-            </div>
-          </div>
-
-          <div class="slide-visual-col">
-            <div class="visual-deck-card highlight-metric-card">
-              <div class="card-hero-icon"><i class="fa-solid fa-piggy-bank"></i></div>
-              <h3>Measurable Cost Elimination</h3>
-              <p>By engineering an in-house interconnected workbook solution with robust data validation and automated reporting macros, external licensing fees were completely eliminated without any disruption to clinic operations.</p>
-              
-              <div class="savings-breakdown">
-                <div class="savings-row">
-                  <span>Replaced Tool:</span>
-                  <strong>Commercial 3rd-Party Rota Tool</strong>
-                </div>
-                <div class="savings-row">
-                  <span>Recurring Savings:</span>
-                  <strong class="text-green">~£9,000 / year</strong>
-                </div>
-                <div class="savings-row">
-                  <span>Additional Impact:</span>
-                  <strong>New Revenue Business Case Proposal</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 9: City Audio Visual - CurrentRMS Implementation -->
-      <section class="deck-slide" data-slide-id="city-av" data-title="CurrentRMS System Implementation" data-num="9">
-        <div class="slide-content-wrapper slide-split-layout">
-          
-          <div class="slide-narrative-col">
-            <div class="slide-meta-row">
-              <span class="org-badge"><i class="fa-solid fa-building"></i> City Audio Visual Ltd</span>
-              <span class="pill-badge">Full Lifecycle Implementation</span>
-            </div>
-
-            <h2 class="slide-headline">Rental Management System (CurrentRMS) Implementation</h2>
-            <p class="slide-lead">
-              Led the end-to-end implementation of CurrentRMS cloud software, modernizing inventory control, event scheduling, and client quotation workflows across the business.
-            </p>
-
-            <div class="slide-bullets-box">
-              <div class="bullet-item">
-                <i class="fa-solid fa-list-check"></i>
-                <span><strong>Vendor &amp; Timeline Management:</strong> Coordinated software vendors, IT hardware, and operational stakeholders through UAT testing.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-book"></i>
-                <span><strong>SOP Documentation &amp; Training:</strong> Authored comprehensive user guides and conducted hands-on staff training for 100% adoption.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-file-invoice-dollar"></i>
-                <span><strong>Financial Governance:</strong> Managed customer databases, quotation pipelines, and debt control via Sage Accounts.</span>
-              </div>
-              <div class="bullet-item">
-                <i class="fa-solid fa-barcode"></i>
-                <span><strong>Barcode Stock Innovation:</strong> Developed proposal for automated barcode scanning to streamline inventory audits.</span>
-              </div>
-            </div>
-
-            <div class="slide-tech-footer">
-              <span class="pill-tag"><i class="fa-solid fa-server"></i> CurrentRMS</span>
-              <span class="pill-tag"><i class="fa-solid fa-file-invoice"></i> Sage Accounts</span>
-              <span class="pill-tag"><i class="fa-solid fa-address-book"></i> CRM Systems</span>
-              <span class="pill-tag"><i class="fa-solid fa-clipboard-check"></i> UAT Management</span>
-            </div>
-          </div>
-
-          <div class="slide-visual-col">
-            <div class="visual-deck-card highlight-metric-card">
-              <div class="card-hero-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
-              <h3>Modernized Operational Infrastructure</h3>
-              <p>Replaced disjointed legacy spreadsheets and paper booking records with a centralized cloud database, providing real-time stock availability, instant quotations, and accurate customer histories.</p>
-              
-              <div class="savings-breakdown">
-                <div class="savings-row">
-                  <span>Implementation Scope:</span>
-                  <strong>Full Lifecycle (Vendor → UAT → Live)</strong>
-                </div>
-                <div class="savings-row">
-                  <span>Adoption Rate:</span>
-                  <strong class="text-green">100% Across Staff</strong>
-                </div>
-                <div class="savings-row">
-                  <span>Inventory Control:</span>
-                  <strong>Automated Barcode Proposal</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 10: Technical & Analytical Skills Matrix -->
-      <section class="deck-slide" data-slide-id="skills" data-title="Skills &amp; Capabilities Matrix" data-num="10">
-        <div class="slide-content-wrapper slide-full-layout">
-          
-          <div class="full-slide-header">
-            <span class="slide-badge-pill"><i class="fa-solid fa-toolbox"></i> Capabilities</span>
-            <h2>Technical &amp; Analytical Skills Matrix</h2>
-            <p>Tiered proficiency levels demonstrated across digital transformation, Power BI reporting, and project coordination.</p>
-          </div>
-
-          <div class="skills-deck-grid">
-            
-            <div class="skill-category-card">
-              <div class="cat-header">
-                <i class="fa-solid fa-chart-pie"></i>
-                <h3>Data Visualization &amp; BI</h3>
-              </div>
-              <div class="cat-skills">
-                <div class="deck-skill-row">
-                  <span>Power BI (DAX, Modeling)</span>
-                  <span class="skill-tag expert">Expert</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>Decomposition Trees &amp; Gauges</span>
-                  <span class="skill-tag expert">Expert</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>Treemaps &amp; Drill-throughs</span>
-                  <span class="skill-tag expert">Expert</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>Advanced Excel &amp; Modeling</span>
-                  <span class="skill-tag expert">Expert</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="skill-category-card">
-              <div class="cat-header">
-                <i class="fa-solid fa-bolt"></i>
-                <h3>Automation &amp; Cloud</h3>
-              </div>
-              <div class="cat-skills">
-                <div class="deck-skill-row">
-                  <span>Power Automate (Approvals)</span>
-                  <span class="skill-tag expert">Expert</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>SharePoint Online Lists</span>
-                  <span class="skill-tag expert">Expert</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>Microsoft Forms &amp; Power Apps</span>
-                  <span class="skill-tag advanced">Advanced</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>Workflow Optimization</span>
-                  <span class="skill-tag expert">Expert</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="skill-category-card">
-              <div class="cat-header">
-                <i class="fa-solid fa-diagram-project"></i>
-                <h3>Project Management</h3>
-              </div>
-              <div class="cat-skills">
-                <div class="deck-skill-row">
-                  <span>Agile &amp; Scrum Methodologies</span>
-                  <span class="skill-tag advanced">Advanced</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>Stakeholder Alignment</span>
-                  <span class="skill-tag expert">Expert</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>Jira, Trello, Monday, PM3</span>
-                  <span class="skill-tag advanced">Advanced</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>Standard Operating Procedures</span>
-                  <span class="skill-tag expert">Expert</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="skill-category-card">
-              <div class="cat-header">
-                <i class="fa-solid fa-code"></i>
-                <h3>Databases &amp; Systems</h3>
-              </div>
-              <div class="cat-skills">
-                <div class="deck-skill-row">
-                  <span>SQL Querying</span>
-                  <span class="skill-tag developing">Developing</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>Python (Data Analysis)</span>
-                  <span class="skill-tag developing">Developing</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>Git &amp; Version Control</span>
-                  <span class="skill-tag developing">Developing</span>
-                </div>
-                <div class="deck-skill-row">
-                  <span>TempRE &amp; CurrentRMS</span>
-                  <span class="skill-tag advanced">Advanced</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 11: Work History & Career Journey -->
-      <section class="deck-slide" data-slide-id="timeline" data-title="Career History &amp; Experience" data-num="11">
-        <div class="slide-content-wrapper slide-full-layout">
-          
-          <div class="full-slide-header">
-            <span class="slide-badge-pill"><i class="fa-solid fa-clock-rotate-left"></i> Career Journey</span>
-            <h2>Work Experience &amp; Impact History</h2>
-            <p>Chronological record of technical delivery and operational leadership.</p>
-          </div>
-
-          <div class="experience-deck-grid">
-            
-            <div class="exp-deck-card highlight">
-              <div class="exp-header">
-                <div>
-                  <h3>Project Support Officer</h3>
-                  <h4>University Hospitals Coventry &amp; Warwickshire NHS Trust</h4>
-                </div>
-                <span class="exp-date">Jan 2022 – Present</span>
-              </div>
-              <ul class="exp-bullets">
-                <li>Directed Retire &amp; Return overhaul; published as <strong>NHS Employers National Case Study</strong>.</li>
-                <li>Slashed Additional Assignment form turnaround by <strong>75% (30d → 5d)</strong> for 50+ weekly apps.</li>
-                <li>Architected Power BI executive suite monitoring <strong>£284k+ bank spend</strong> in real time.</li>
-                <li>Administered TempRE booking platform, cleansing, modeling, and validating operational datasets.</li>
-              </ul>
-            </div>
-
-            <div class="exp-deck-card">
-              <div class="exp-header">
-                <div>
-                  <h3>Scheduling &amp; Rota Coordinator</h3>
-                  <h4>McKesson UK (MASTA Travel Health)</h4>
-                </div>
-                <span class="exp-date">Nov 2019 – Nov 2021</span>
-              </div>
-              <ul class="exp-bullets">
-                <li>Devised Excel scheduling solution delivering <strong>£9,000 in annual recurring cost savings</strong>.</li>
-                <li>Formulated clinical forecasting models optimizing travel health nurses through COVID-19.</li>
-                <li>Automated weekly status reporting and stakeholder reminders via MS Power Automate.</li>
-              </ul>
-            </div>
-
-            <div class="exp-deck-card">
-              <div class="exp-header">
-                <div>
-                  <h3>Administrator &amp; Systems Lead</h3>
-                  <h4>City Audio Visual Ltd (CAV)</h4>
-                </div>
-                <span class="exp-date">Apr 2016 – Nov 2019</span>
-              </div>
-              <ul class="exp-bullets">
-                <li>Led full implementation of CurrentRMS cloud system, managing milestones, UAT, and staff SOPs.</li>
-                <li>Maintained stock databases and financial accounts with Sage Accounts.</li>
-                <li>Developed business proposal for barcode stock control system.</li>
-              </ul>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SLIDE 12: Education, Certifications & Contact -->
-      <section class="deck-slide" data-slide-id="contact" data-title="Education &amp; Contact" data-num="12">
-        <div class="slide-content-wrapper slide-split-layout">
-          
-          <div class="slide-narrative-col">
-            <span class="slide-badge-pill"><i class="fa-solid fa-graduation-cap"></i> Qualifications</span>
-            <h2 class="slide-headline">Education &amp; Certifications</h2>
-
-            <div class="deck-certs-list">
-              <div class="deck-cert-item highlight">
-                <i class="fa-brands fa-google cert-ico"></i>
-                <div class="cert-txt">
-                  <strong>Google Project Management Professional Certificate</strong>
-                  <span>Coursera (Completed April 2025) • Foundations, Initiation, Planning, Execution, Agile PM</span>
-                </div>
-              </div>
-
-              <div class="deck-cert-item">
-                <i class="fa-solid fa-gamepad cert-ico"></i>
-                <div class="cert-txt">
-                  <strong>Game Industry Skills Bootcamp</strong>
-                  <span>Game Academy / Ascento (Nov 2023) • Interactive Data &amp; Systems</span>
-                </div>
-              </div>
-
-              <div class="deck-cert-item">
-                <i class="fa-solid fa-hospital-user cert-ico"></i>
-                <div class="cert-txt">
-                  <strong>PM3 &amp; NHS Project Management Masterclass</strong>
-                  <span>Bestoutcome &amp; UHCW NHS Trust (2022)</span>
-                </div>
-              </div>
-
-              <div class="deck-cert-item">
-                <i class="fa-solid fa-certificate cert-ico"></i>
-                <div class="cert-txt">
-                  <strong>Business Administration NVQ Diploma Level 2</strong>
-                  <span>Abingdon &amp; Witney College (2016–2017)</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="slide-visual-col">
-            <div class="visual-deck-card contact-deck-card">
-              <span class="slide-badge-pill"><i class="fa-solid fa-handshake"></i> Let's Discuss Opportunities</span>
-              <h3>Santosh Limbu</h3>
-              <p>Coventry, United Kingdom • Available for Project Support, Data Analyst &amp; Digital Transformation roles.</p>
-
-              <div class="deck-contact-actions">
-                <a href="mailto:s.limbu@hotmail.com" class="deck-contact-btn primary">
-                  <i class="fa-solid fa-envelope"></i> s.limbu@hotmail.com
-                </a>
-                <a href="tel:07473633112" class="deck-contact-btn">
-                  <i class="fa-solid fa-phone"></i> 07473 633112
-                </a>
-                <a href="https://linkedin.com/in/slimbu" target="_blank" rel="noopener noreferrer" class="deck-contact-btn">
-                  <i class="fa-brands fa-linkedin"></i> linkedin.com/in/slimbu
-                </a>
-                <a href="https://github.com/santosh-limbu" target="_blank" rel="noopener noreferrer" class="deck-contact-btn">
-                  <i class="fa-brands fa-github"></i> github.com/santosh-limbu
-                </a>
-              </div>
-
-              <div class="deck-contact-footer-btns">
-                <button class="slide-action-btn outline" id="copyEmailContactBtn">
-                  <i class="fa-regular fa-copy"></i> <span id="copyEmailContactText">Copy Email Address</span>
-                </button>
-                <button class="slide-action-btn outline" onclick="window.print()">
-                  <i class="fa-solid fa-print"></i> Print / Save PDF
-                </button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <!-- Bottom PowerPoint Style Presentation Controls Bar -->
-  <footer class="deck-footer-bar">
-    <div class="footer-left">
-      <button class="deck-nav-btn" id="prevSlideBtn" title="Previous Slide [← or PageUp]">
-        <i class="fa-solid fa-chevron-left"></i>
-        <span>Previous</span>
-      </button>
-
-      <button class="deck-nav-btn" id="nextSlideBtn" title="Next Slide [→, Space, or PageDown]">
-        <span>Next</span>
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
-
-      <div class="slide-counter-box" id="slideCounterBox">
-        <span class="counter-current" id="counterCurrent">01</span>
-        <span class="counter-sep">/</span>
-        <span class="counter-total" id="counterTotal">12</span>
-      </div>
-    </div>
-
-    <!-- Center Slide Progress Dots / Bar -->
-    <div class="footer-center">
-      <div class="slide-dots-strip" id="slideDotsStrip">
-        <!-- Generated by JS -->
-      </div>
-    </div>
-
-    <!-- Right Controls -->
-    <div class="footer-right">
-      <div class="keyboard-hints" title="Keyboard Shortcuts">
-        <span><kbd>←</kbd><kbd>→</kbd> Navigate</span>
-        <span><kbd>G</kbd> Grid</span>
-        <span><kbd>F</kbd> Fullscreen</span>
-      </div>
-      <button class="btn-sorter-toggle" id="footerSorterBtn" title="View All Slides Grid">
-        <i class="fa-solid fa-table-cells"></i>
-      </button>
-    </div>
-  </footer>
-
-  <!-- Slide Sorter Modal (PowerPoint Grid View) -->
-  <div class="sorter-modal" id="sorterModal" role="dialog" aria-modal="true" aria-label="Slide Sorter Grid">
-    <div class="sorter-backdrop" id="sorterBackdrop"></div>
-    <div class="sorter-dialog">
-      <div class="sorter-header">
-        <div class="sorter-title-row">
-          <i class="fa-solid fa-table-cells-large"></i>
-          <h3>Slide Sorter: All Projects &amp; Sections</h3>
-        </div>
-        <button class="sorter-close-btn" id="sorterCloseBtn" aria-label="Close Slide Sorter">
+      <div class="theater-header-right">
+        <!-- Project Switchers -->
+        <button class="theater-action-btn" id="deckPrevProjectBtn" title="Previous Project">
+          <i class="fa-solid fa-backward-step"></i>
+          <span class="btn-lbl">Prev Project</span>
+        </button>
+        <button class="theater-action-btn" id="deckNextProjectBtn" title="Next Project">
+          <span class="btn-lbl">Next Project</span>
+          <i class="fa-solid fa-forward-step"></i>
+        </button>
+
+        <span class="deck-header-divider">|</span>
+
+        <!-- Fullscreen -->
+        <button class="theater-action-btn icon-only" id="deckFullscreenBtn" title="Fullscreen Presentation [Press F]">
+          <i class="fa-solid fa-expand"></i>
+        </button>
+
+        <!-- Close -->
+        <button class="theater-action-btn close-theater-btn" id="deckCloseBtn" title="Close Presentation [Press Esc]">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div class="sorter-grid" id="sorterGrid">
-        <!-- Injected Dynamically by JS -->
+    </header>
+
+    <!-- Presentation Viewport Stage (Slide Canvas) -->
+    <div class="deck-stage-container">
+      <div class="deck-slide-stage" id="deckSlideStage">
+        <!-- Project Slides are rendered here dynamically by JS -->
+      </div>
+    </div>
+
+    <!-- Presentation Bottom Controller Bar -->
+    <footer class="deck-theater-footer">
+      <div class="theater-footer-left">
+        <button class="slide-nav-pill" id="deckPrevSlideBtn" title="Previous Slide [← or PageUp]">
+          <i class="fa-solid fa-chevron-left"></i>
+          <span>Previous Slide</span>
+        </button>
+        <button class="slide-nav-pill" id="deckNextSlideBtn" title="Next Slide [→, Space, or PageDown]">
+          <span>Next Slide</span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        
+        <div class="deck-counter-indicator">
+          <span id="deckCounterCurrent">01</span>
+          <span class="sep">/</span>
+          <span id="deckCounterTotal">03</span>
+        </div>
+      </div>
+
+      <div class="theater-footer-center">
+        <div class="deck-dots-container" id="deckDotsContainer">
+          <!-- Dots injected by JS -->
+        </div>
+      </div>
+
+      <div class="theater-footer-right">
+        <div class="deck-shortcuts-hint">
+          <span><kbd>←</kbd><kbd>→</kbd> Navigate</span>
+          <span><kbd>F</kbd> Fullscreen</span>
+          <span><kbd>Esc</kbd> Exit</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- =======================================================================
+       SKILLS MATRIX MODAL
+       ======================================================================= -->
+  <div class="info-dialog-modal" id="skillsModal">
+    <div class="modal-dim-backdrop" id="skillsBackdrop"></div>
+    <div class="info-dialog-card">
+      <div class="info-dialog-header">
+        <div class="info-dialog-title">
+          <i class="fa-solid fa-toolbox"></i>
+          <h3>Technical &amp; Analytical Skills Matrix</h3>
+        </div>
+        <button class="info-close-btn" id="skillsCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="info-dialog-body">
+        <div class="skills-catalog-grid">
+          <div class="skill-category-box">
+            <div class="cat-head"><i class="fa-solid fa-chart-pie"></i> <h4>Data Visualization &amp; BI</h4></div>
+            <div class="cat-list">
+              <div class="skill-row"><span>Power BI (Advanced DAX, Modeling)</span> <span class="tag expert">Expert</span></div>
+              <div class="skill-row"><span>Decomposition Trees &amp; KPI Gauges</span> <span class="tag expert">Expert</span></div>
+              <div class="skill-row"><span>Treemaps &amp; Drill-throughs</span> <span class="tag expert">Expert</span></div>
+              <div class="skill-row"><span>Advanced Excel &amp; Rota Modeling</span> <span class="tag expert">Expert</span></div>
+            </div>
+          </div>
+          <div class="skill-category-box">
+            <div class="cat-head"><i class="fa-solid fa-bolt"></i> <h4>Automation &amp; Power Platform</h4></div>
+            <div class="cat-list">
+              <div class="skill-row"><span>Power Automate (Complex Approvals)</span> <span class="tag expert">Expert</span></div>
+              <div class="skill-row"><span>SharePoint Online Lists &amp; Worklists</span> <span class="tag expert">Expert</span></div>
+              <div class="skill-row"><span>Microsoft Forms &amp; Power Apps</span> <span class="tag advanced">Advanced</span></div>
+              <div class="skill-row"><span>Workflow Optimization &amp; Lean</span> <span class="tag expert">Expert</span></div>
+            </div>
+          </div>
+          <div class="skill-category-box">
+            <div class="cat-head"><i class="fa-solid fa-diagram-project"></i> <h4>Project Management &amp; Methods</h4></div>
+            <div class="cat-list">
+              <div class="skill-row"><span>Agile &amp; Scrum Methodologies</span> <span class="tag advanced">Advanced</span></div>
+              <div class="skill-row"><span>Stakeholder Management (HR, Payroll)</span> <span class="tag expert">Expert</span></div>
+              <div class="skill-row"><span>Jira, Trello, Monday.com, PM3</span> <span class="tag advanced">Advanced</span></div>
+              <div class="skill-row"><span>SOPs, Flowcharts &amp; Testing Matrices</span> <span class="tag expert">Expert</span></div>
+            </div>
+          </div>
+          <div class="skill-category-box">
+            <div class="cat-head"><i class="fa-solid fa-code"></i> <h4>Databases &amp; Systems</h4></div>
+            <div class="cat-list">
+              <div class="skill-row"><span>SQL Querying (SELECT, JOINs)</span> <span class="tag developing">Developing</span></div>
+              <div class="skill-row"><span>Python for Data Analysis</span> <span class="tag developing">Developing</span></div>
+              <div class="skill-row"><span>Git &amp; Version Control</span> <span class="tag developing">Developing</span></div>
+              <div class="skill-row"><span>TempRE, HealthRoster, CurrentRMS</span> <span class="tag advanced">Advanced</span></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- High-Resolution Lightbox Modal for Zooming Images -->
-  <div class="image-zoom-modal" id="zoomModal" role="dialog" aria-modal="true" aria-label="Image Zoom Viewer">
-    <div class="zoom-backdrop" id="zoomBackdrop"></div>
-    <div class="zoom-dialog">
-      <button class="zoom-close-btn" id="zoomCloseBtn" aria-label="Close Zoom View">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <div class="zoom-img-wrapper">
-        <img src="" alt="High-Resolution Preview" id="zoomImg">
+  <!-- =======================================================================
+       EXPERIENCE & CERTIFICATIONS MODAL
+       ======================================================================= -->
+  <div class="info-dialog-modal" id="experienceModal">
+    <div class="modal-dim-backdrop" id="experienceBackdrop"></div>
+    <div class="info-dialog-card">
+      <div class="info-dialog-header">
+        <div class="info-dialog-title">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <h3>Career Journey &amp; Credentials</h3>
+        </div>
+        <button class="info-close-btn" id="experienceCloseBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="zoom-caption">
-        <h3 id="zoomTitle">Dashboard Title</h3>
-        <p id="zoomDesc">Description</p>
+      <div class="info-dialog-body">
+        <div class="exp-catalog-list">
+          <div class="exp-item highlight">
+            <div class="exp-item-head">
+              <div>
+                <h4>Project Support Officer</h4>
+                <h5>University Hospitals Coventry &amp; Warwickshire NHS Trust</h5>
+              </div>
+              <span class="exp-badge">Jan 2022 – Present</span>
+            </div>
+            <p>Lead digital transformation initiatives across Payroll, HR, and Clinical departments. Delivered the NHS Employers national best-practice case study, reduced locum processing by 75%, and created executive Power BI suites monitoring £284k+ bank spend.</p>
+          </div>
+          <div class="exp-item">
+            <div class="exp-item-head">
+              <div>
+                <h4>Scheduling &amp; Rota Coordinator</h4>
+                <h5>McKesson UK (MASTA Travel Health)</h5>
+              </div>
+              <span class="exp-badge">Nov 2019 – Nov 2021</span>
+            </div>
+            <p>Devised in-house Excel scheduling models delivering ~£9,000 in annual recurring savings while optimizing clinical nurse staffing through shifting COVID-19 pandemic demands.</p>
+          </div>
+          <div class="exp-item">
+            <div class="exp-item-head">
+              <div>
+                <h4>Administrator &amp; Systems Lead</h4>
+                <h5>City Audio Visual Ltd (CAV)</h5>
+              </div>
+              <span class="exp-badge">Apr 2016 – Nov 2019</span>
+            </div>
+            <p>Led full lifecycle implementation of CurrentRMS cloud software, coordinating UAT, SOP documentation, and 100% staff training adoption.</p>
+          </div>
+          <div class="cert-item-summary">
+            <i class="fa-brands fa-google cert-ico"></i>
+            <div>
+              <strong>Google Project Management Professional Certificate</strong>
+              <small>Coursera (Completed April 2025) • Foundations, Planning, Execution, Agile PM</small>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Quick Contact Popup Modal -->
-  <div class="contact-pop-modal" id="contactPopModal">
-    <div class="pop-backdrop" id="popBackdrop"></div>
-    <div class="pop-card">
-      <button class="pop-close" id="popClose"><i class="fa-solid fa-xmark"></i></button>
-      <h3>Get in Touch with Santosh</h3>
-      <p>Coventry, United Kingdom • Open to new roles</p>
-      
-      <div class="pop-links">
-        <a href="mailto:s.limbu@hotmail.com" class="pop-link"><i class="fa-solid fa-envelope"></i> s.limbu@hotmail.com</a>
-        <a href="tel:07473633112" class="pop-link"><i class="fa-solid fa-phone"></i> 07473 633112</a>
-        <a href="https://linkedin.com/in/slimbu" target="_blank" class="pop-link"><i class="fa-brands fa-linkedin"></i> linkedin.com/in/slimbu</a>
-        <a href="https://github.com/santosh-limbu" target="_blank" class="pop-link"><i class="fa-brands fa-github"></i> github.com/santosh-limbu</a>
+  <!-- =======================================================================
+       IMAGE LIGHTBOX ZOOM MODAL
+       ======================================================================= -->
+  <div class="image-zoom-theater" id="imageZoomTheater">
+    <div class="zoom-backdrop" id="zoomTheaterBackdrop"></div>
+    <div class="zoom-container">
+      <button class="zoom-close-theater-btn" id="zoomTheaterCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+      <div class="zoom-media-box">
+        <img src="" alt="High-Resolution View" id="zoomTheaterImg">
       </div>
-      <button class="slide-action-btn primary full" id="popCopyEmail">
-        <i class="fa-regular fa-copy"></i> <span id="popCopyText">Copy Email Address</span>
-      </button>
+      <div class="zoom-caption-box">
+        <h4 id="zoomTheaterTitle">Dashboard Title</h4>
+        <p id="zoomTheaterDesc">Detailed description of this dashboard visual.</p>
+      </div>
     </div>
   </div>
 
-  <!-- Main Deck Script -->
+  <!-- =======================================================================
+       CONTACT POPUP MODAL
+       ======================================================================= -->
+  <div class="info-dialog-modal" id="contactModal">
+    <div class="modal-dim-backdrop" id="contactBackdrop"></div>
+    <div class="info-dialog-card contact-dialog-card">
+      <div class="info-dialog-header">
+        <div class="info-dialog-title">
+          <i class="fa-solid fa-paper-plane"></i>
+          <h3>Connect with Santosh Limbu</h3>
+        </div>
+        <button class="info-close-btn" id="contactCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="info-dialog-body contact-dialog-body">
+        <p class="contact-intro">Available for Project Support, Data Analyst &amp; Digital Transformation roles in Coventry, West Midlands, or remote.</p>
+        
+        <div class="contact-channels">
+          <a href="mailto:s.limbu@hotmail.com" class="channel-card">
+            <i class="fa-solid fa-envelope"></i>
+            <div><strong>Email</strong><span>s.limbu@hotmail.com</span></div>
+          </a>
+          <a href="tel:07473633112" class="channel-card">
+            <i class="fa-solid fa-phone"></i>
+            <div><strong>Phone</strong><span>07473 633112</span></div>
+          </a>
+          <a href="https://linkedin.com/in/slimbu" target="_blank" rel="noopener noreferrer" class="channel-card">
+            <i class="fa-brands fa-linkedin"></i>
+            <div><strong>LinkedIn</strong><span>linkedin.com/in/slimbu</span></div>
+          </a>
+          <a href="https://github.com/santosh-limbu" target="_blank" rel="noopener noreferrer" class="channel-card">
+            <i class="fa-brands fa-github"></i>
+            <div><strong>GitHub</strong><span>github.com/santosh-limbu</span></div>
+          </a>
+        </div>
+
+        <div class="contact-dialog-actions">
+          <button class="copy-modal-email-btn" id="copyContactModalBtn">
+            <i class="fa-regular fa-copy"></i> <span id="copyContactModalText">Copy Email Address</span>
+          </button>
+          <button class="print-pdf-btn" onclick="window.print()">
+            <i class="fa-solid fa-print"></i> Print CV View
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Script -->
   <script src="assets/js/main.js"></script>
 </body>
 </html>
