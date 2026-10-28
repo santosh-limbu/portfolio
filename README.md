@@ -1,24 +1,39 @@
-# Santosh Limbu - Professional Project & Data Portfolio
+# Santosh Limbu - Interactive PowerPoint-Style Project Portfolio
 
-An interactive, responsive portfolio website showcasing digital transformation projects, Power BI executive dashboards, and process automation case studies delivered across healthcare and corporate environments.
+An interactive, single-page presentation deck portfolio designed for employers and hiring managers. It fits completely within a single viewport without requiring scrolling and delivers a slide-based PowerPoint experience with interactive project deep-dives, live dashboard image switchers, and high-resolution zoom.
 
-Designed to be hosted directly on **GitHub Pages** with zero build configuration.
+Hosted directly on **GitHub Pages** with zero build configuration.
 
 ---
 
-## 🌟 Key Features
+## 🌟 Presentation Deck Features
 
-- **Executive Impact Metrics**: Highlights major quantifiable achievements including 75% process acceleration, £9,000+ recurring annual savings, and 2,500+ digital approvals audited.
-- **Dynamic Recruiter Persona Switcher**: Allows hiring managers to tailor the summary text based on their target profile (*Data Analyst & BI*, *Project Coordinator / PM*, or *Digital Transformation & Automation*).
-- **High-Resolution Power BI Showcase**: Includes 9 production dashboard screenshots with an interactive category filter and full-screen modal lightbox (with keyboard navigation: `Esc`, `←`, `→`).
-- **Comprehensive Project Case Studies**: Structured breakdown of challenges, technical actions, and measurable outcomes for flagship projects (including the **NHS Employers National Best-Practice Case Study**).
-- **Interactive Project Filtering & Real-Time Search**: Instant search by tool, keyword, or metric (e.g. searching *"DAX"*, *"SharePoint"*, *"£9,000"*, or *"Agile"*).
-- **Visual Skills Matrix**: Tiered proficiency levels (Expert, Advanced, Developing) with concrete tool tags.
-- **Career Timeline & Certifications**: Chronological journey covering UHCW NHS Trust, McKesson UK, and City Audio Visual, alongside the Google Project Management Professional Certificate.
-- **Modern UI & Accessibility**:
-  - Dark / Light mode toggle with automatic OS preference detection and `localStorage` persistence.
-  - One-click email copy helper.
-  - Print-ready stylesheet (`@media print`) for instant export to clean PDF.
+- **No-Scroll 100vh Viewport Architecture**: Fits cleanly on desktop and laptop displays without page scrolling.
+- **PowerPoint-Style Slide Navigation**:
+  - **12 Interactive Slides** covering projects, healthcare data suites, skills, and certifications.
+  - **Left Thumbnail Rail**: Collapsible thumbnail strip allowing 1-click jumps across all slides.
+  - **Bottom Presentation Control Bar**: `< Previous`, `Next >`, slide counter (`01 / 12`), interactive progress dots, and keyboard shortcuts.
+  - **Slide Sorter Modal (`Press G`)**: PowerPoint-style grid view to inspect all 12 slides at a glance.
+  - **Fullscreen Presentation Mode (`Press F`)**: Expands into an executive pitch deck.
+- **Interactive Project Deep Dives**:
+  - **Retire & Return Overhaul** (*Published National Best-Practice Case Study by NHS Employers* & Trust Award Winner).
+  - **TempRE Vacancy Approvals System** (*2,500+ shift requests, multi-tier approval logic, TSS/GDO/DCMO automated triggers*).
+  - **Healthcare KPI & SLA Reporting Suite** (*DAX rolling statistics, 3 custom SLA gauge charts, £284k+ live spend tracked*).
+  - **Shift Spend Decomposition Tree & Trends** (*AI Decomposition Tree and multi-year winter surge curve peaking at £0.62M*).
+  - **Bank & Locum Additional Assignment Forms** (*75% faster turnaround: 30 days down to 5 days on 50+ weekly applications*).
+  - **Team Operations & Invoicing SLA Tracker** (*438 weekly communications monitored with agency invoice dispute governance*).
+  - **McKesson UK Scheduling & Rota System** (*£9,000 annual recurring software savings & COVID-19 pandemic modeling*).
+  - **CurrentRMS Full Lifecycle Implementation** (*UAT management, SOP documentation, and 100% staff adoption*).
+- **Interactive Multi-Image Dashboards**: Click tabs inside project slides to toggle between different dashboard views and click to zoom into high-resolution screenshots.
+- **Dynamic Recruiter Persona Switcher**: Tailor the executive summary for *Data Analyst & BI*, *Project Coordinator / PM*, or *Digital Transformation*.
+- **Keyboard Shortcuts**:
+  - `←` or `PageUp`: Previous slide
+  - `→`, `Space`, or `PageDown`: Next slide
+  - `Home` / `End`: First / Last slide
+  - `G`: Open Slide Sorter grid
+  - `F`: Toggle Fullscreen presentation
+  - `T`: Toggle Dark / Light theme
+  - `Esc`: Close modals
 
 ---
 
@@ -26,15 +41,15 @@ Designed to be hosted directly on **GitHub Pages** with zero build configuration
 
 ```text
 ProjectPortfolio/
-├── index.html                 # Main single-page interactive portfolio
-├── README.md                  # Project documentation & GitHub Pages deployment guide
+├── index.html                 # Main PowerPoint presentation deck
+├── README.md                  # Documentation & GitHub Pages guide
 ├── .gitignore                 # Standard ignore file
 └── assets/
     ├── css/
-    │   └── style.css          # Production styling, light/dark themes, responsive rules, print styles
+    │   └── style.css          # Viewport-fitted presentation styles, slide transitions, light/dark themes
     ├── js/
-    │   └── main.js            # Interactivity: lightbox, persona toggle, live search, theme switch
-    └── images/                # High-resolution dashboard screenshots
+    │   └── main.js            # PresentationDeck engine, keyboard shortcuts, slide sorter, sub-tabs
+    └── images/                # High-resolution Power BI dashboard screenshots
         ├── dashboard-kpi-rolling-statistics.png
         ├── dashboard-kpi-monthly-statistics.png
         ├── dashboard-shift-decomp-spend.png
@@ -50,63 +65,38 @@ ProjectPortfolio/
 
 ## 🚀 How to Host on GitHub Pages (Step-by-Step)
 
-This site is built with pure standard web technologies (HTML5, CSS3, Vanilla JS). It requires no build tools or package managers and works natively with GitHub Pages out of the box.
+This site uses pure standard web technologies (HTML5, modern CSS3, Vanilla JS). It requires no build tools or package managers and works natively on GitHub Pages out of the box.
 
-### Step 1: Create a new repository on GitHub
-1. Log in to your GitHub account: [github.com/santosh-limbu](https://github.com/santosh-limbu).
-2. Click the **+** icon in the top-right corner and select **New repository**.
+### Step 1: Create a Repository on GitHub
+1. Log in to [github.com/santosh-limbu](https://github.com/santosh-limbu).
+2. Click the **+** icon in the top right → **New repository**.
 3. Name your repository (e.g., `portfolio` or `project-portfolio`).
-4. Keep it **Public** (required for free GitHub Pages).
-5. Leave "Initialize this repository with a README" **unchecked** (we already have files created).
-6. Click **Create repository**.
+4. Set it to **Public** and leave "Initialize with a README" **unchecked**.
+5. Click **Create repository**.
 
-### Step 2: Push this repository to GitHub
-In your local terminal (PowerShell or Git Bash) inside this project folder:
+### Step 2: Push to GitHub
+In your local terminal inside `d:\💻Dev\ProjectPortfolio`:
 
 ```bash
-# 1. Initialize git (if not already done)
-git init
-
-# 2. Stage all files
-git add .
-
-# 3. Create your initial commit
-git commit -m "Initial commit: Interactive portfolio with Power BI showcase"
-
-# 4. Set the default branch to main
-git branch -M main
-
-# 5. Link to your GitHub repository (replace with your repository URL)
+# 1. Link to your GitHub repository (replace with your repository URL)
 git remote add origin https://github.com/santosh-limbu/portfolio.git
 
-# 6. Push to GitHub
+# 2. Push to GitHub
 git push -u origin main
 ```
 
-### Step 3: Enable GitHub Pages
+### Step 3: Turn on GitHub Pages
 1. Go to your repository on GitHub.
-2. Click on **Settings** (tab at the top).
-3. On the left sidebar, click on **Pages** (under *Code and automation*).
-4. Under **Build and deployment**:
-   - **Source**: Select `Deploy from a branch`.
-   - **Branch**: Select `main` and `/ (root)`.
-5. Click **Save**.
+2. Click **Settings** (tab at the top) → **Pages** (in the left sidebar).
+3. Under **Build and deployment**:
+   - **Source**: `Deploy from a branch`
+   - **Branch**: `main` and folder `/ (root)`
+4. Click **Save**.
 
-Within 1–2 minutes, your portfolio will be live at:
+Your presentation portfolio will be live in ~60 seconds at:
 ```text
 https://santosh-limbu.github.io/portfolio/
 ```
-*(or `https://santosh-limbu.github.io` if the repository is named `santosh-limbu.github.io`)*.
-
----
-
-## 🛠️ Technologies Used
-
-- **HTML5 & Semantic Elements** (Accessible landmarks, meta tags, OpenGraph ready)
-- **Modern CSS3** (Custom properties/tokens, CSS Grid, Flexbox, Glassmorphism, Print media query)
-- **Vanilla JavaScript (ES6+)** (DOM manipulation, IntersectionObserver, Clipboard API)
-- **Font Awesome 6.5.1** (Free vector icons)
-- **Google Fonts** (Inter, Plus Jakarta Sans, JetBrains Mono)
 
 ---
 
