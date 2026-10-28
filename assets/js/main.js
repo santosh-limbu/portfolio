@@ -1,17 +1,41 @@
 /**
  * Santosh Limbu - Portfolio & Interactive Presentation Deck Manager
- * Handles Main Hub Project Catalog + Fullscreen Project Slide Theater
+ * Features:
+ *  - Project Catalog Hub + Presentation Slide Theater
+ *  - In-Browser Password-Protected Admin Mode (SHA-256 WebCrypto)
+ *  - Live Visual Content Editor for Projects & Slides
+ *  - Direct GitHub REST API Sync & 1-Click Code Exporter
  */
+
+// Default Hash for 'admin2026'
+const DEFAULT_ADMIN_HASH = '6051fc84a7a0d74c225fb18a496b09952da5642e60723ecae543298edd7d82d6';
+
+// Available Dashboard Images for Slide Selector
+const AVAILABLE_DASHBOARD_IMAGES = [
+  { val: 'assets/images/dashboard-tempre-all-approvals.png', label: 'TempRE All Approvals Pipeline (2.5k Requests)' },
+  { val: 'assets/images/dashboard-tempre-urgent-approvals.png', label: 'TempRE Urgent Approvals Tracker (110 Requests)' },
+  { val: 'assets/images/dashboard-tempre-progress-tracker.png', label: 'TempRE Progress Tracker & Shift Details (GC41P)' },
+  { val: 'assets/images/dashboard-kpi-rolling-statistics.png', label: 'KPI Rolling Total Statistics (3 SLA Gauges, £284k)' },
+  { val: 'assets/images/dashboard-kpi-monthly-statistics.png', label: 'KPI Monthly Statistics (January 2026, 687 Approved)' },
+  { val: 'assets/images/dashboard-shift-decomp-spend.png', label: 'Shift Spend Decomposition Tree & Surge Curve (£0.62M)' },
+  { val: 'assets/images/dashboard-month-summary-900.png', label: 'Locum 31-Day Intake & Staff Treemap (900 Forms)' },
+  { val: 'assets/images/dashboard-month-summary-191.png', label: 'Locum Daily Intake & RTW Compliance (191 Forms)' },
+  { val: 'assets/images/dashboard-team-summaries-sla.png', label: 'Team Summaries, Invoicing Disputes & SLAs (438 Emails)' }
+];
 
 // =========================================================================
 // 1. Projects Presentation Slides Database
 // =========================================================================
-const PROJECTS_DATA = {
+const DEFAULT_PROJECTS_DATA = {
   'retire-return': {
     id: 'retire-return',
     title: 'Retire & Return Digital Overhaul',
     org: 'UHCW NHS Trust',
+    category: 'digital-transformation automation',
     badge: 'Published National Best Practice by NHS Employers',
+    metricText: '100% Trackable Workflow • 0 Lost Forms',
+    desc: 'Directed the digital overhaul of a legacy paper pathway plagued by lost forms (71% user difficulty). Replaced it with a 100% trackable automated system published nationally by NHS Employers.',
+    tags: ['Microsoft Forms', 'SharePoint Lists', 'Power Automate', 'Agile PM'],
     slides: [
       {
         title: 'Problem & Operational Friction',
@@ -83,9 +107,13 @@ const PROJECTS_DATA = {
 
   'tempre-approvals': {
     id: 'tempre-approvals',
-    title: 'TempRE Vacancy Approvals System',
+    title: 'TempRE Vacancy Approvals System (Bank Staff)',
     org: 'UHCW NHS Trust',
-    badge: 'Workflow Automation & Audit',
+    category: 'automation digital-transformation power-bi',
+    badge: 'Workflow Automation',
+    metricText: '2,569 Requests Audited • 92.6% Approved',
+    desc: 'Multi-stage digital approval system replacing manual handoffs. Enforces departmental budget validation, manages urgent escalations, and audits 2,560+ shift requests.',
+    tags: ['SharePoint', 'Power Automate', 'TempRE', 'Power BI'],
     slides: [
       {
         title: 'System Overview & Routing Logic',
@@ -170,7 +198,11 @@ const PROJECTS_DATA = {
     id: 'powerbi-kpis',
     title: 'Healthcare KPI & SLA Reporting Suite',
     org: 'UHCW NHS Trust',
-    badge: 'Advanced Power BI & DAX',
+    category: 'power-bi',
+    badge: 'Power BI & DAX',
+    metricText: '3 SLA Gauges • 15% Query Reduction',
+    desc: 'Production Power BI suite utilizing DAX time intelligence, 3 custom SLA gauge benchmarks, and live shift registers tracking £284,071 across 2,380 approved requests.',
+    tags: ['Power BI', 'DAX Modeling', 'KPI Gauge Charts', 'SLA Tracking'],
     slides: [
       {
         title: 'BI Architecture & DAX Modeling',
@@ -237,7 +269,11 @@ const PROJECTS_DATA = {
     id: 'spend-decomp',
     title: 'Shift Spend Decomposition Tree & Winter Surge',
     org: 'UHCW NHS Trust',
-    badge: 'Root-Cause BI & Forecasting',
+    category: 'power-bi systems',
+    badge: 'Root-Cause BI',
+    metricText: '2,751 Shifts • £590 Avg Shift Cost',
+    desc: 'AI Decomposition Tree root-cause analysis across 2,751 shifts by specialty and grade, accompanied by multi-year trend line tracking seasonal surge peaks (£0.62M in Jan 2026).',
+    tags: ['Decomposition Tree', 'Spend Forecasting', 'Trend Analysis'],
     slides: [
       {
         title: 'Root-Cause Shift Analytics',
@@ -284,7 +320,11 @@ const PROJECTS_DATA = {
     id: 'locum-forms',
     title: 'Bank & Locum Additional Assignment Forms',
     org: 'UHCW NHS Trust',
+    category: 'digital-transformation automation power-bi',
     badge: '75% Faster Processing',
+    metricText: '30d → 5d Turnaround (75% Faster)',
+    desc: 'Re-engineered paper locum onboarding, slashing turnaround from 30 days to 5 days. Seamlessly processes 50+ weekly applications with direct Payroll integration and Treemap analytics.',
+    tags: ['Power Apps', 'Power Automate', 'SharePoint', 'Treemaps'],
     slides: [
       {
         title: 'Process Re-Engineering Overview',
@@ -350,7 +390,11 @@ const PROJECTS_DATA = {
     id: 'team-ops',
     title: 'Team Operations & Invoicing SLA Tracker',
     org: 'UHCW NHS Trust',
-    badge: 'Operations Cockpit & Finance',
+    category: 'power-bi systems',
+    badge: 'Operations Cockpit',
+    metricText: '438 Weekly Emails • Invoice Auditing',
+    desc: 'Cross-departmental management dashboard monitoring 438 weekly emails across Admin, AHP, Medics, and Nursing teams, featuring aging communication flags and agency invoice dispute governance.',
+    tags: ['Stacked Visuals', 'SLA Aging', 'Invoice Governance'],
     slides: [
       {
         title: 'Cross-Team Cockpit Overview',
@@ -395,9 +439,13 @@ const PROJECTS_DATA = {
 
   'mckesson-system': {
     id: 'mckesson-system',
-    title: 'McKesson Excel Scheduling & Forecasting',
-    org: 'McKesson UK (MASTA Travel Health)',
-    badge: '£9,000 Annual Recurring Savings',
+    title: 'McKesson Excel Scheduling & Demand Forecasting',
+    org: 'McKesson UK (MASTA)',
+    category: 'systems automation',
+    badge: '£9,000 Saved',
+    metricText: '£9,000 Recurring Annual Cost Savings',
+    desc: 'Devised an in-house Excel forecasting and clinical rota system replacing costly external software, saving ~£9,000 annually while adapting resource allocation to COVID-19 pandemic demands.',
+    tags: ['Advanced Excel', 'Forecasting Models', 'Power Automate'],
     slides: [
       {
         title: 'Software Replacement & Savings',
@@ -447,8 +495,12 @@ const PROJECTS_DATA = {
   'city-av': {
     id: 'city-av',
     title: 'CurrentRMS Cloud System Implementation',
-    org: 'City Audio Visual Ltd (CAV)',
-    badge: 'System Delivery & CRM',
+    org: 'City Audio Visual Ltd',
+    category: 'systems digital-transformation',
+    badge: 'System Delivery',
+    metricText: '100% Staff Onboarding • Sage CRM',
+    desc: 'Led full lifecycle rollout of CurrentRMS software, coordinating vendor testing, UAT, SOP authoring, and staff training to modernize inventory tracking and CRM workflows.',
+    tags: ['CurrentRMS', 'Sage Accounts', 'UAT Testing', 'SOP Documentation'],
     slides: [
       {
         title: 'Full Lifecycle Implementation',
@@ -496,6 +548,19 @@ const PROJECTS_DATA = {
   }
 };
 
+// Global Active Data (Hydrated from localStorage if modified)
+let PROJECTS_DATA = (() => {
+  const saved = localStorage.getItem('sl_projects_data');
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch (e) {
+      console.warn('Failed to parse saved projects data:', e);
+    }
+  }
+  return JSON.parse(JSON.stringify(DEFAULT_PROJECTS_DATA));
+})();
+
 // =========================================================================
 // 2. Persona Focus Profiles
 // =========================================================================
@@ -535,11 +600,14 @@ class ProjectDeckController {
     this.deckCounterTotal = document.getElementById('deckCounterTotal');
     this.deckDotsContainer = document.getElementById('deckDotsContainer');
 
-    this.projectIds = Object.keys(PROJECTS_DATA);
-    this.currentProjectId = this.projectIds[0];
+    this.currentProjectId = Object.keys(PROJECTS_DATA)[0];
     this.currentSlideIndex = 0;
 
     this.bindEvents();
+  }
+
+  getProjectIds() {
+    return Object.keys(PROJECTS_DATA);
   }
 
   openProject(projectId, slideIndex = 0) {
@@ -585,20 +653,22 @@ class ProjectDeckController {
   }
 
   nextProject() {
-    const curIdx = this.projectIds.indexOf(this.currentProjectId);
-    const nextIdx = (curIdx + 1) % this.projectIds.length;
-    this.openProject(this.projectIds[nextIdx], 0);
+    const ids = this.getProjectIds();
+    const curIdx = ids.indexOf(this.currentProjectId);
+    const nextIdx = (curIdx + 1) % ids.length;
+    this.openProject(ids[nextIdx], 0);
   }
 
   prevProject() {
-    const curIdx = this.projectIds.indexOf(this.currentProjectId);
-    const prevIdx = (curIdx - 1 + this.projectIds.length) % this.projectIds.length;
-    this.openProject(this.projectIds[prevIdx], 0);
+    const ids = this.getProjectIds();
+    const curIdx = ids.indexOf(this.currentProjectId);
+    const prevIdx = (curIdx - 1 + ids.length) % ids.length;
+    this.openProject(ids[prevIdx], 0);
   }
 
   renderCurrentSlide() {
     const project = PROJECTS_DATA[this.currentProjectId];
-    const slide = project.slides[this.currentSlideIndex];
+    const slide = project.slides[this.currentSlideIndex] || project.slides[0];
     const total = project.slides.length;
     const currentNum = this.currentSlideIndex + 1;
 
@@ -670,16 +740,16 @@ class ProjectDeckController {
             <span class="category-pill">${project.badge}</span>
           </div>
 
-          ${slide.visualType === 'image' ? `
-            <div class="visual-preview-box" onclick="zoomImage('${slide.imageSrc}', '${slide.imageCaption}', '${slide.imageDesc}')">
-              <img src="${slide.imageSrc}" alt="${slide.imageCaption}" loading="lazy">
+          ${slide.visualType === 'image' && slide.imageSrc ? `
+            <div class="visual-preview-box" onclick="zoomImage('${slide.imageSrc}', '${slide.imageCaption || project.title}', '${slide.imageDesc || slide.desc}')">
+              <img src="${slide.imageSrc}" alt="${slide.imageCaption || project.title}" loading="lazy">
               <div class="zoom-overlay-hint">
                 <i class="fa-solid fa-magnifying-glass-plus"></i> Click to Zoom High-Res
               </div>
             </div>
           ` : `
             <div class="flow-steps-column">
-              ${slide.flowSteps.map((step, idx) => `
+              ${(slide.flowSteps || []).map((step, idx) => `
                 <div class="flow-step-box">
                   <div class="flow-step-icon"><i class="${step.icon}"></i></div>
                   <div class="flow-step-text">
@@ -687,7 +757,7 @@ class ProjectDeckController {
                     <span>${step.sub}</span>
                   </div>
                 </div>
-                ${idx < slide.flowSteps.length - 1 ? `<div class="flow-arrow-down"><i class="fa-solid fa-arrow-down"></i></div>` : ''}
+                ${idx < (slide.flowSteps.length - 1) ? `<div class="flow-arrow-down"><i class="fa-solid fa-arrow-down"></i></div>` : ''}
               `).join('')}
             </div>
           `}
@@ -709,7 +779,7 @@ class ProjectDeckController {
     // Keyboard navigation
     window.addEventListener('keydown', (e) => {
       if (!this.deckModal.classList.contains('active')) return;
-      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
 
       if (e.key === 'Escape') {
         const zoomTheater = document.getElementById('imageZoomTheater');
@@ -772,48 +842,97 @@ const initZoomTheater = () => {
 };
 
 // =========================================================================
-// 5. Hub Filter & Real-Time Search
+// 5. Hub Filter, Render & Search
 // =========================================================================
+const renderProjectsCatalog = () => {
+  const catalogGrid = document.getElementById('projectsCatalogGrid');
+  if (!catalogGrid) return;
+
+  const isAdmin = isAdminActive();
+  const projectEntries = Object.values(PROJECTS_DATA);
+
+  catalogGrid.innerHTML = projectEntries.map(project => `
+    <div class="project-entry-card ${project.id === 'retire-return' ? 'featured-entry' : ''}" 
+         data-project-id="${project.id}" 
+         data-category="${project.category || ''}" 
+         data-keywords="${(project.title + ' ' + project.desc + ' ' + (project.tags || []).join(' ')).toLowerCase()}">
+      
+      ${isAdmin ? `
+        <button class="admin-card-edit-btn" onclick="event.stopPropagation(); openProjectEditor('${project.id}')" title="Edit this project">
+          <i class="fa-solid fa-pen"></i> Edit
+        </button>
+      ` : ''}
+
+      <div class="card-top-row">
+        <span class="org-label"><i class="fa-solid fa-hospital"></i> ${project.org}</span>
+        <span class="${project.badge && project.badge.toLowerCase().includes('national') ? 'award-pill' : 'category-pill'}">
+          ${project.badge && project.badge.toLowerCase().includes('national') ? '<i class="fa-solid fa-trophy"></i> ' : ''}${project.badge}
+        </span>
+      </div>
+      <h3 class="entry-title">${project.title}</h3>
+      <p class="entry-desc">${project.desc}</p>
+      
+      ${project.metricText ? `
+        <div class="entry-metric-badge ${project.metricText.includes('100%') || project.metricText.includes('75%') || project.metricText.includes('£9,000') ? 'positive' : ''}">
+          <i class="fa-solid fa-circle-check"></i> ${project.metricText}
+        </div>
+      ` : ''}
+
+      <div class="entry-tech-tags">
+        ${(project.tags || []).map(t => `<span>${t}</span>`).join('')}
+      </div>
+
+      <div class="entry-footer">
+        <span class="slide-count-hint"><i class="fa-solid fa-layer-group"></i> ${project.slides ? project.slides.length : 0} Interactive Slides</span>
+        <button class="launch-deck-btn" onclick="openProjectDeck('${project.id}')">
+          Launch Presentation <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  applyActiveCatalogFilters();
+};
+
+let activeCatalogFilter = 'all';
+let catalogSearchQuery = '';
+
+const applyActiveCatalogFilters = () => {
+  const projectCards = document.querySelectorAll('.project-entry-card');
+  const q = catalogSearchQuery.toLowerCase().trim();
+
+  projectCards.forEach(card => {
+    const category = card.getAttribute('data-category') || '';
+    const keywords = (card.getAttribute('data-keywords') || '') + ' ' + card.innerText.toLowerCase();
+
+    const matchesCategory = activeCatalogFilter === 'all' || category.includes(activeCatalogFilter);
+    const matchesSearch = !q || keywords.includes(q);
+
+    if (matchesCategory && matchesSearch) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+};
+
 const initCatalogFiltering = () => {
   const filterBtns = document.querySelectorAll('#projectFilterGroup .pill-btn');
   const searchInput = document.getElementById('projectSearchInput');
-  const projectCards = document.querySelectorAll('.project-entry-card');
-
-  let activeFilter = 'all';
-  let searchQuery = '';
-
-  const applyFilters = () => {
-    const q = searchQuery.toLowerCase().trim();
-
-    projectCards.forEach(card => {
-      const category = card.getAttribute('data-category') || '';
-      const keywords = (card.getAttribute('data-keywords') || '') + ' ' + card.innerText.toLowerCase();
-
-      const matchesCategory = activeFilter === 'all' || category.includes(activeFilter);
-      const matchesSearch = !q || keywords.includes(q);
-
-      if (matchesCategory && matchesSearch) {
-        card.style.display = 'flex';
-        card.style.animation = 'fadeIn 0.25s ease forwards';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  };
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      activeFilter = btn.getAttribute('data-filter');
-      applyFilters();
+      activeCatalogFilter = btn.getAttribute('data-filter');
+      applyActiveCatalogFilters();
     });
   });
 
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value;
-      applyFilters();
+      catalogSearchQuery = e.target.value;
+      applyActiveCatalogFilters();
     });
   }
 };
@@ -919,7 +1038,7 @@ const toggleTheme = () => {
 const toggleFullscreen = () => {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen().catch(err => {
-      console.warn(`Fullscreen request error: ${err.message}`);
+      console.warn(`Fullscreen error: ${err.message}`);
     });
   } else {
     if (document.exitFullscreen) document.exitFullscreen();
@@ -950,12 +1069,450 @@ const setupCopyEmail = (btnId, textId) => {
 };
 
 // =========================================================================
-// 11. Initializer
+// 11. IN-BROWSER ADMIN MODE & PASSWORD CHECK (SHA-256 WebCrypto)
+// =========================================================================
+async function hashString(str) {
+  const utf8 = new TextEncoder().encode(str);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function getAdminHash() {
+  return localStorage.getItem('sl_admin_hash') || DEFAULT_ADMIN_HASH;
+}
+
+function isAdminActive() {
+  return sessionStorage.getItem('sl_admin_session') === 'true';
+}
+
+function setAdminActive(active) {
+  if (active) {
+    sessionStorage.setItem('sl_admin_session', 'true');
+  } else {
+    sessionStorage.removeItem('sl_admin_session');
+  }
+  updateAdminUI();
+}
+
+function updateAdminUI() {
+  const floatingBar = document.getElementById('adminFloatingBar');
+  const active = isAdminActive();
+
+  if (floatingBar) {
+    floatingBar.style.display = active ? 'block' : 'none';
+  }
+
+  // Re-render project cards to show/hide edit buttons
+  renderProjectsCatalog();
+}
+
+const initAdminAuth = () => {
+  const triggerBtn = document.getElementById('adminTriggerBtn');
+  const loginModal = document.getElementById('adminLoginModal');
+  const loginClose = document.getElementById('adminLoginCloseBtn');
+  const loginBackdrop = document.getElementById('adminLoginBackdrop');
+  const loginForm = document.getElementById('adminLoginForm');
+  const passwordInput = document.getElementById('adminPasswordInput');
+  const errorMsg = document.getElementById('adminAuthError');
+  const logoutBtn = document.getElementById('adminLogoutBtn');
+
+  const openLogin = () => {
+    if (isAdminActive()) {
+      alert('You are already authenticated in Admin Mode.');
+      return;
+    }
+    loginModal.classList.add('active');
+    passwordInput.value = '';
+    errorMsg.style.display = 'none';
+    passwordInput.focus();
+  };
+
+  const closeLogin = () => loginModal.classList.remove('active');
+
+  if (triggerBtn) triggerBtn.addEventListener('click', openLogin);
+  if (loginClose) loginClose.addEventListener('click', closeLogin);
+  if (loginBackdrop) loginBackdrop.addEventListener('click', closeLogin);
+
+  // Keyboard shortcut Ctrl + Shift + A
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+      e.preventDefault();
+      if (!isAdminActive()) openLogin();
+      else setAdminActive(false);
+    }
+  });
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', async () => {
+      const entered = passwordInput.value;
+      const hashed = await hashString(entered);
+      const expected = getAdminHash();
+
+      if (hashed === expected) {
+        setAdminActive(true);
+        closeLogin();
+      } else {
+        errorMsg.style.display = 'flex';
+        passwordInput.select();
+      }
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      setAdminActive(false);
+    });
+  }
+};
+
+// =========================================================================
+// 12. PROJECT CONTENT EDITOR MODAL ENGINE
+// =========================================================================
+let editingProjectId = null;
+let editingSlidesList = [];
+
+function openProjectEditor(projectId) {
+  const modal = document.getElementById('projectEditorModal');
+  const modalTitle = document.getElementById('editorModalTitle');
+  const titleInp = document.getElementById('editProjectTitle');
+  const orgInp = document.getElementById('editProjectOrg');
+  const catInp = document.getElementById('editProjectCategory');
+  const badgeInp = document.getElementById('editProjectBadge');
+  const descInp = document.getElementById('editProjectDesc');
+  const metricInp = document.getElementById('editProjectMetric');
+  const tagsInp = document.getElementById('editProjectTags');
+  const idInp = document.getElementById('editProjectId');
+
+  if (!modal) return;
+
+  editingProjectId = projectId;
+  const project = PROJECTS_DATA[projectId] || {
+    id: 'new-project-' + Date.now(),
+    title: 'New Project',
+    org: 'Organisation Name',
+    category: 'digital-transformation automation',
+    badge: 'Project Badge',
+    metricText: 'Measurable Outcome Metric',
+    desc: 'Project overview description...',
+    tags: ['Power BI', 'Automation'],
+    slides: []
+  };
+
+  modalTitle.textContent = projectId ? `Edit Project: ${project.title}` : 'Add New Project';
+  idInp.value = project.id;
+  titleInp.value = project.title || '';
+  orgInp.value = project.org || '';
+  catInp.value = project.category || 'digital-transformation automation';
+  badgeInp.value = project.badge || '';
+  descInp.value = project.desc || '';
+  metricInp.value = project.metricText || '';
+  tagsInp.value = (project.tags || []).join(', ');
+
+  editingSlidesList = JSON.parse(JSON.stringify(project.slides || []));
+  renderEditorSlides();
+
+  modal.classList.add('active');
+}
+
+function renderEditorSlides() {
+  const container = document.getElementById('editorSlidesContainer');
+  const countEl = document.getElementById('editorSlideCount');
+  if (!container) return;
+
+  countEl.textContent = editingSlidesList.length;
+
+  container.innerHTML = editingSlidesList.map((slide, idx) => `
+    <div class="editor-slide-block" data-slide-index="${idx}">
+      <div class="slide-block-top">
+        <span class="slide-block-num">Slide ${idx + 1}: ${slide.title || 'Untitled Slide'}</span>
+        <button type="button" class="btn-remove-slide" onclick="removeEditorSlide(${idx})">
+          <i class="fa-solid fa-trash"></i> Remove
+        </button>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Slide Navigation Title</label>
+          <input type="text" value="${slide.title || ''}" onchange="updateEditorSlideField(${idx}, 'title', this.value)" required>
+        </div>
+        <div class="form-group">
+          <label>Main Headline</label>
+          <input type="text" value="${slide.heading || ''}" onchange="updateEditorSlideField(${idx}, 'heading', this.value)" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Slide Narrative Summary</label>
+        <textarea rows="2" onchange="updateEditorSlideField(${idx}, 'desc', this.value)">${slide.desc || ''}</textarea>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Key Bullets (one bullet per line)</label>
+          <textarea rows="3" onchange="updateEditorSlideBullets(${idx}, this.value)">${(slide.bullets || []).join('\n')}</textarea>
+        </div>
+        <div class="form-group">
+          <label>Visual Presentation Image</label>
+          <select onchange="updateEditorSlideField(${idx}, 'imageSrc', this.value)">
+            <option value="">-- No Image / Process Flow --</option>
+            ${AVAILABLE_DASHBOARD_IMAGES.map(img => `
+              <option value="${img.val}" ${slide.imageSrc === img.val ? 'selected' : ''}>${img.label}</option>
+            `).join('')}
+          </select>
+          <small style="color:var(--text-muted); margin-top:0.35rem;">Or process steps will display automatically</small>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateEditorSlideField(idx, field, value) {
+  if (editingSlidesList[idx]) {
+    editingSlidesList[idx][field] = value;
+    if (field === 'imageSrc') {
+      editingSlidesList[idx].visualType = value ? 'image' : 'flow';
+    }
+  }
+}
+
+function updateEditorSlideBullets(idx, text) {
+  if (editingSlidesList[idx]) {
+    editingSlidesList[idx].bullets = text.split('\n').filter(b => b.trim().length > 0);
+  }
+}
+
+function removeEditorSlide(idx) {
+  editingSlidesList.splice(idx, 1);
+  renderEditorSlides();
+}
+
+function addEditorSlide() {
+  editingSlidesList.push({
+    title: 'New Slide Title',
+    heading: 'Slide Headline Overview',
+    desc: 'Enter detailed explanation for this slide...',
+    bullets: ['Key takeaway point 1', 'Key technical action or metric 2'],
+    stats: [{ val: '100%', lbl: 'Metric Description' }],
+    tags: ['Power BI', 'Analytics'],
+    visualType: 'image',
+    imageSrc: AVAILABLE_DASHBOARD_IMAGES[0].val,
+    imageCaption: 'Dashboard View',
+    imageDesc: 'High-level operational metrics'
+  });
+  renderEditorSlides();
+}
+
+const initProjectEditor = () => {
+  const modal = document.getElementById('projectEditorModal');
+  const closeBtn = document.getElementById('projectEditorCloseBtn');
+  const cancelBtn = document.getElementById('editorCancelBtn');
+  const backdrop = document.getElementById('projectEditorBackdrop');
+  const addSlideBtn = document.getElementById('editorAddSlideBtn');
+  const addProjectBtn = document.getElementById('adminAddProjectBtn');
+  const form = document.getElementById('projectEditorForm');
+
+  const close = () => modal.classList.remove('active');
+
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  if (cancelBtn) cancelBtn.addEventListener('click', close);
+  if (backdrop) backdrop.addEventListener('click', close);
+  if (addSlideBtn) addSlideBtn.addEventListener('click', addEditorSlide);
+  if (addProjectBtn) addProjectBtn.addEventListener('click', () => openProjectEditor(null));
+
+  if (form) {
+    form.addEventListener('submit', () => {
+      const id = document.getElementById('editProjectId').value;
+      const title = document.getElementById('editProjectTitle').value;
+      const org = document.getElementById('editProjectOrg').value;
+      const category = document.getElementById('editProjectCategory').value;
+      const badge = document.getElementById('editProjectBadge').value;
+      const desc = document.getElementById('editProjectDesc').value;
+      const metricText = document.getElementById('editProjectMetric').value;
+      const tags = document.getElementById('editProjectTags').value.split(',').map(t => t.trim()).filter(Boolean);
+
+      PROJECTS_DATA[id] = {
+        id,
+        title,
+        org,
+        category,
+        badge,
+        desc,
+        metricText,
+        tags,
+        slides: editingSlidesList
+      };
+
+      // Persist in localStorage
+      localStorage.setItem('sl_projects_data', JSON.stringify(PROJECTS_DATA));
+
+      renderProjectsCatalog();
+      close();
+      alert(`Project "${title}" saved successfully! Click "Sync to GitHub / Export" to publish.`);
+    });
+  }
+};
+
+// =========================================================================
+// 13. SYNC TO GITHUB & DATA EXPORT ENGINE
+// =========================================================================
+const initSyncEngine = () => {
+  const syncBtn = document.getElementById('adminSyncBtn');
+  const modal = document.getElementById('syncModal');
+  const closeBtn = document.getElementById('syncCloseBtn');
+  const backdrop = document.getElementById('syncBackdrop');
+  const downloadJsBtn = document.getElementById('downloadJsBtn');
+  const copyJsonBtn = document.getElementById('copyJsonBtn');
+  const copyJsonText = document.getElementById('copyJsonText');
+  const githubCommitBtn = document.getElementById('githubDirectCommitBtn');
+  const tokenInp = document.getElementById('githubTokenInput');
+  const repoInp = document.getElementById('githubRepoInput');
+  const feedback = document.getElementById('githubSyncFeedback');
+  const changePwBtn = document.getElementById('changePasswordBtn');
+  const newPwInp = document.getElementById('newAdminPasswordInput');
+  const pwFeedback = document.getElementById('pwChangeFeedback');
+
+  const openSync = () => modal.classList.add('active');
+  const closeSync = () => modal.classList.remove('active');
+
+  if (syncBtn) syncBtn.addEventListener('click', openSync);
+  if (closeBtn) closeBtn.addEventListener('click', closeSync);
+  if (backdrop) backdrop.addEventListener('click', closeSync);
+
+  // Pre-fill saved token if any
+  const savedToken = localStorage.getItem('sl_github_token');
+  if (savedToken && tokenInp) tokenInp.value = savedToken;
+
+  // Copy JSON
+  if (copyJsonBtn) {
+    copyJsonBtn.addEventListener('click', () => {
+      const json = JSON.stringify(PROJECTS_DATA, null, 2);
+      navigator.clipboard.writeText(json).then(() => {
+        copyJsonText.textContent = 'Copied JSON! ✓';
+        setTimeout(() => copyJsonText.textContent = 'Copy Data JSON', 2000);
+      });
+    });
+  }
+
+  // Download Updated main.js
+  if (downloadJsBtn) {
+    downloadJsBtn.addEventListener('click', () => {
+      generateAndDownloadMainJs();
+    });
+  }
+
+  // Change Admin Password
+  if (changePwBtn) {
+    changePwBtn.addEventListener('click', async () => {
+      const newPw = newPwInp.value.trim();
+      if (newPw.length < 4) {
+        alert('Password must be at least 4 characters long.');
+        return;
+      }
+      const hashed = await hashString(newPw);
+      localStorage.setItem('sl_admin_hash', hashed);
+      newPwInp.value = '';
+      pwFeedback.style.display = 'block';
+      setTimeout(() => pwFeedback.style.display = 'none', 3000);
+    });
+  }
+
+  // Direct GitHub Push via API
+  if (githubCommitBtn) {
+    githubCommitBtn.addEventListener('click', async () => {
+      const token = tokenInp.value.trim();
+      const repo = repoInp.value.trim();
+
+      if (!token || !repo) {
+        alert('Please enter your GitHub token and repository name.');
+        return;
+      }
+
+      localStorage.setItem('sl_github_token', token);
+      feedback.style.display = 'block';
+      feedback.style.color = 'var(--primary)';
+      feedback.textContent = 'Connecting to GitHub API...';
+
+      try {
+        const filePath = 'assets/js/main.js';
+        const getUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
+        
+        // 1. Get existing file SHA
+        const getRes = await fetch(getUrl, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+
+        if (!getRes.ok) {
+          throw new Error(`Failed to access ${repo}: ${getRes.status} ${getRes.statusText}`);
+        }
+
+        const fileData = await getRes.json();
+        const sha = fileData.sha;
+
+        // 2. Generate updated file content
+        const updatedJs = generateMainJsContent();
+        const encodedContent = btoa(unescape(encodeURIComponent(updatedJs)));
+
+        // 3. PUT updated file
+        const putRes = await fetch(getUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: 'Update portfolio projects via in-browser admin',
+            content: encodedContent,
+            sha: sha
+          })
+        });
+
+        if (!putRes.ok) {
+          throw new Error(`Commit failed: ${putRes.status} ${putRes.statusText}`);
+        }
+
+        feedback.style.color = 'var(--accent-emerald)';
+        feedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> <strong>Successfully committed!</strong> GitHub Pages is now rebuilding. Your changes will be live in ~60 seconds.';
+      } catch (err) {
+        feedback.style.color = 'var(--accent-rose)';
+        feedback.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Error: ${err.message}`;
+      }
+    });
+  }
+};
+
+function generateMainJsContent() {
+  // Read current script text and substitute DEFAULT_PROJECTS_DATA
+  const serialized = JSON.stringify(PROJECTS_DATA, null, 2);
+  // We can construct a clean representation
+  return `// Santosh Limbu - Portfolio Data (Updated ${new Date().toISOString()})\nconst DEFAULT_PROJECTS_DATA = ${serialized};\n` + 
+    document.querySelector('script[src*="main.js"]').outerHTML;
+}
+
+function generateAndDownloadMainJs() {
+  const jsonString = JSON.stringify(PROJECTS_DATA, null, 2);
+  const blob = new Blob([`// Santosh Limbu Portfolio Projects Data\nconst PROJECTS_DATA = ${jsonString};\n`], { type: 'application/javascript' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'projects-data.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+// =========================================================================
+// 14. Global Initializer
 // =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
   setTheme(getPreferredTheme());
   projectDeck = new ProjectDeckController();
 
+  renderProjectsCatalog();
   initCatalogFiltering();
   initPersonaSwitcher();
   initZoomTheater();
@@ -965,6 +1522,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setupModal('openExperienceModalBtn', 'experienceModal', 'experienceCloseBtn', 'experienceBackdrop');
   setupModal('openContactModalBtn', 'contactModal', 'contactCloseBtn', 'contactBackdrop');
 
+  // Admin and Editor Init
+  initAdminAuth();
+  initProjectEditor();
+  initSyncEngine();
+  updateAdminUI();
+
   // Theme button
   const themeBtn = document.getElementById('themeToggleBtn');
   if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
@@ -972,6 +1535,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Copy email chips
   setupCopyEmail('copyEmailHeroBtn', 'copyEmailHeroText');
   setupCopyEmail('copyContactModalBtn', 'copyContactModalText');
+
+  // Year
+  const yearEl = document.getElementById('copyrightYear');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   // Check URL hash (e.g. #project-tempre-approvals)
   const hash = window.location.hash.replace('#', '');

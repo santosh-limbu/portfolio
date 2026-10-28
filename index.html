@@ -396,7 +396,236 @@
       </div>
     </section>
 
+    <!-- Hub Footer with Discreet Admin Link -->
+    <footer class="hub-footer">
+      <div class="footer-content">
+        <p>&copy; <span id="copyrightYear">2026</span> <strong>Santosh Limbu</strong>. All rights reserved.</p>
+        <div class="footer-links">
+          <span>Coventry, United Kingdom</span>
+          <span class="sep">•</span>
+          <button class="admin-login-link" id="adminTriggerBtn" title="Portfolio Admin Login (Ctrl+Shift+A)">
+            <i class="fa-solid fa-lock"></i> <span>Admin</span>
+          </button>
+        </div>
+      </div>
+    </footer>
+
   </main>
+
+  <!-- =======================================================================
+       ADMIN TOP FLOATING BAR (Visible only when unlocked)
+       ======================================================================= -->
+  <aside class="admin-floating-bar" id="adminFloatingBar" style="display: none;">
+    <div class="admin-bar-inner">
+      <div class="admin-status-wrap">
+        <span class="admin-mode-pill"><i class="fa-solid fa-shield-halved"></i> Admin Mode Active</span>
+        <span class="admin-tip">Click ✏️ on any project to edit content</span>
+      </div>
+      <div class="admin-actions-wrap">
+        <button class="admin-btn-action" id="adminAddProjectBtn">
+          <i class="fa-solid fa-plus"></i> Add Project
+        </button>
+        <button class="admin-btn-action sync-btn" id="adminSyncBtn">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Sync to GitHub / Export
+        </button>
+        <button class="admin-btn-action logout-btn" id="adminLogoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i> Log Out
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =======================================================================
+       ADMIN LOGIN MODAL
+       ======================================================================= -->
+  <div class="info-dialog-modal" id="adminLoginModal">
+    <div class="modal-dim-backdrop" id="adminLoginBackdrop"></div>
+    <div class="info-dialog-card admin-login-dialog">
+      <div class="info-dialog-header">
+        <div class="info-dialog-title">
+          <i class="fa-solid fa-lock"></i>
+          <h3>Portfolio Admin Authentication</h3>
+        </div>
+        <button class="info-close-btn" id="adminLoginCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="info-dialog-body">
+        <p class="admin-auth-desc">Enter your administrative password to enable in-browser editing for projects, slides, and metrics.</p>
+        
+        <form id="adminLoginForm" onsubmit="return false;">
+          <div class="auth-input-group">
+            <label for="adminPasswordInput">Admin Password</label>
+            <div class="password-field-wrap">
+              <i class="fa-solid fa-key pass-ico"></i>
+              <input type="password" id="adminPasswordInput" placeholder="Enter password (default: admin2026)" autocomplete="current-password" required>
+            </div>
+          </div>
+          <div class="auth-error-msg" id="adminAuthError" style="display: none;">
+            <i class="fa-solid fa-circle-exclamation"></i> Incorrect password. Please try again.
+          </div>
+          <div class="auth-btn-row">
+            <button type="submit" class="auth-submit-btn" id="adminLoginSubmitBtn">
+              <i class="fa-solid fa-unlock"></i> Unlock Edit Mode
+            </button>
+          </div>
+        </form>
+        <p class="admin-auth-note"><small>Default password is <code>admin2026</code>. You can change it once logged in.</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       PROJECT CONTENT EDITOR MODAL
+       ======================================================================= -->
+  <div class="info-dialog-modal" id="projectEditorModal">
+    <div class="modal-dim-backdrop" id="projectEditorBackdrop"></div>
+    <div class="info-dialog-card editor-dialog-card">
+      <div class="info-dialog-header">
+        <div class="info-dialog-title">
+          <i class="fa-solid fa-pen-to-square"></i>
+          <h3 id="editorModalTitle">Edit Project Content</h3>
+        </div>
+        <button class="info-close-btn" id="projectEditorCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="info-dialog-body editor-body">
+        <form id="projectEditorForm" onsubmit="return false;">
+          <input type="hidden" id="editProjectId">
+
+          <div class="editor-section">
+            <h4 class="editor-sec-title">Core Project Information</h4>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="editProjectTitle">Project Title</label>
+                <input type="text" id="editProjectTitle" required>
+              </div>
+              <div class="form-group">
+                <label for="editProjectOrg">Organisation</label>
+                <input type="text" id="editProjectOrg" required>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="editProjectCategory">Category Filter</label>
+                <select id="editProjectCategory">
+                  <option value="digital-transformation automation">Digital Transformation & Automation</option>
+                  <option value="power-bi">Power BI & Analytics</option>
+                  <option value="power-bi digital-transformation">Power BI & Digital Transformation</option>
+                  <option value="systems automation">Systems & Automation</option>
+                  <option value="systems digital-transformation">Systems & Digital Transformation</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editProjectBadge">Award / Badge Tag</label>
+                <input type="text" id="editProjectBadge" placeholder="e.g. National Best Practice">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="editProjectDesc">Directory Summary Description</label>
+              <textarea id="editProjectDesc" rows="3" required></textarea>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="editProjectMetric">Key Metric Badge Text</label>
+                <input type="text" id="editProjectMetric" placeholder="e.g. 75% Faster Processing">
+              </div>
+              <div class="form-group">
+                <label for="editProjectTags">Technology Tags (comma-separated)</label>
+                <input type="text" id="editProjectTags" placeholder="e.g. Power BI, DAX, SharePoint">
+              </div>
+            </div>
+          </div>
+
+          <div class="editor-section">
+            <div class="slides-header-row">
+              <h4 class="editor-sec-title">Presentation Slides (<span id="editorSlideCount">0</span>)</h4>
+              <button type="button" class="add-slide-mini-btn" id="editorAddSlideBtn">
+                <i class="fa-solid fa-plus"></i> Add Slide
+              </button>
+            </div>
+            
+            <div class="editor-slides-container" id="editorSlidesContainer">
+              <!-- Rendered dynamically for each slide -->
+            </div>
+          </div>
+
+          <div class="editor-actions-footer">
+            <button type="button" class="btn-cancel" id="editorCancelBtn">Cancel</button>
+            <button type="submit" class="btn-save-project" id="editorSaveBtn">
+              <i class="fa-solid fa-floppy-disk"></i> Save Project Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       SYNC TO GITHUB & EXPORT MODAL
+       ======================================================================= -->
+  <div class="info-dialog-modal" id="syncModal">
+    <div class="modal-dim-backdrop" id="syncBackdrop"></div>
+    <div class="info-dialog-card sync-dialog-card">
+      <div class="info-dialog-header">
+        <div class="info-dialog-title">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <h3>Publish Updates to GitHub Pages</h3>
+        </div>
+        <button class="info-close-btn" id="syncCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="info-dialog-body">
+        
+        <div class="sync-options-tabs">
+          <div class="sync-method-card">
+            <h4><i class="fa-brands fa-github"></i> Method 1: Direct GitHub Push via API (Instant Live)</h4>
+            <p>Enter a GitHub Personal Access Token with repo write permissions to commit your updated projects directly to GitHub. GitHub Pages will build and deploy the update live in 60 seconds.</p>
+            
+            <div class="form-group">
+              <label for="githubTokenInput">GitHub Personal Access Token (Fine-grained or classic repo token)</label>
+              <input type="password" id="githubTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            </div>
+            <div class="form-group">
+              <label for="githubRepoInput">Repository (owner/repo)</label>
+              <input type="text" id="githubRepoInput" value="santosh-limbu/portfolio" placeholder="santosh-limbu/portfolio">
+            </div>
+            <button class="sync-action-submit-btn" id="githubDirectCommitBtn">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Commit &amp; Deploy to GitHub Pages
+            </button>
+            <div id="githubSyncFeedback" style="display: none; margin-top: 0.5rem; font-size: 0.825rem;"></div>
+          </div>
+
+          <div class="sync-method-card secondary">
+            <h4><i class="fa-solid fa-download"></i> Method 2: Download / Copy Code</h4>
+            <p>Download the updated JavaScript data file to replace <code>assets/js/main.js</code> in your local project folder, then commit via Git.</p>
+            <div class="download-btns-row">
+              <button class="download-data-btn" id="downloadJsBtn">
+                <i class="fa-solid fa-download"></i> Download Updated <code>main.js</code>
+              </button>
+              <button class="download-data-btn outline" id="copyJsonBtn">
+                <i class="fa-regular fa-copy"></i> <span id="copyJsonText">Copy Data JSON</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="sync-method-card secondary">
+            <h4><i class="fa-solid fa-key"></i> Change Admin Password</h4>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <input type="password" id="newAdminPasswordInput" placeholder="Enter new password">
+              </div>
+              <button class="change-pw-btn" id="changePasswordBtn">
+                Update Password
+              </button>
+            </div>
+            <span id="pwChangeFeedback" style="font-size: 0.75rem; color: var(--accent-emerald); display: none;">Password updated successfully!</span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- =======================================================================
        PROJECT PRESENTATION DECK THEATER (FULLSCREEN POWERPOINT MODAL)
